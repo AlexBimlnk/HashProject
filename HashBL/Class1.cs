@@ -2,6 +2,7 @@
 
 namespace HashBL
 {
+    //heh
     public class Class1
     {
     }
