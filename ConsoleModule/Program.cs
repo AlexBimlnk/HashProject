@@ -3,50 +3,48 @@ using System.Collections.Generic;
 
 namespace ConsoleModule
 {
-    
-
-    class Tree
+    class Node
     {
-        private class Node
+        long data;
+        int level;
+        Node R;
+        Node L;
+        public Node(int data)
         {
-            long data;
-            int level;
-            Node R;
-            Node L;
-            public Node(int data)
+            level = 0;
+            this.data = data;
+            R = L = null;
+        }
+        public void Add(Node toAdd)
+        {
+            toAdd.level++;
+            if (toAdd.data < this.data)
             {
-                level = 0;
-                this.data = data;
-                R = L = null;
-            }
-            public void Add(Node toAdd)
-            {
-                toAdd.level++;
-                if (toAdd.data < this.data)
-                {
-                    if (this.L == null)
-                        this.L = toAdd;
-                    else
-                        this.L.Add(toAdd);
-                }
+                if (this.L == null)
+                    this.L = toAdd;
                 else
-                {
-                    if (this.R == null)
-                        this.R = toAdd;
-                    else
-                        this.R.Add(toAdd);
-                }
+                    this.L.Add(toAdd);
             }
-            public void PrintTransverseBypass()
+            else
             {
-                if (this.L != null)
-                    L.PrintTransverseBypass();
-                Console.Write(this.data);
-                Console.Write('\t');
-                if (this.R != null)
-                    R.PrintTransverseBypass();
+                if (this.R == null)
+                    this.R = toAdd;
+                else
+                    this.R.Add(toAdd);
             }
         }
+        public void PrintTransverseBypass()
+        {
+            if (this.L != null)
+                L.PrintTransverseBypass();
+            Console.Write(this.data);
+            Console.Write('\t');
+            if (this.R != null)
+                R.PrintTransverseBypass();
+        }
+    }
+    class Tree
+    {
         Node Head;
 
 
@@ -64,7 +62,19 @@ namespace ConsoleModule
             Head.PrintTransverseBypass();
         }
 
-        public void PrintBy
+        public void PrintByLevel()
+        {
+            Queue<Node> tmp = new Queue<Node>();
+            int l = 0;
+            tmp.Enqueue(Head);
+
+            Node t;
+            Console.Write($" level {l}: ");
+            while (tmp.TryPeek(out t))
+            {
+                
+            }
+        }
     }
     class Program
     {
