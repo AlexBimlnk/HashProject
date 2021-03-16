@@ -23,7 +23,10 @@ namespace ConsoleModule
         }
         static void Main(string[] args)
         {
-            Directory.CreateDirectory("HashData");
+            string folder = "HashData";
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
 
             Tree test = new Tree();
             test.Push(6);
@@ -33,8 +36,8 @@ namespace ConsoleModule
             Console.WriteLine();
 
             int countFile = 1;
-            HashStructure table = new HashStructure(6);
-            for(int i = 1; i<=4; i++)
+            HashStructure table = new HashStructure();
+            for(int i = 1; i<=10; i++)
             {
                 try
                 {
@@ -44,7 +47,7 @@ namespace ConsoleModule
                 {
                     table.PrintByTransverseBypass();
                     Console.WriteLine();
-                    table.Serealize($"file{countFile}");
+                    table.Serealize($"{folder}/file{countFile}");
                     table = new HashStructure(i);
                     countFile++;
                 }
