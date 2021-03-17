@@ -35,6 +35,7 @@ namespace ConsoleModule
             test.PrintByTransverseBypass();
             Console.WriteLine();
 
+
             int countFile = 1;
             HashStructure table = new HashStructure();
             for(int i = 1; i<=10; i++)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppUI"
         mc:Ignorable="d"
-        Title="Hash Project" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Hash Project" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox x:Name="loginTextBox" HorizontalAlignment="Left" Margin="356,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="263,121,0,0" Text="Логин:" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="88" FontSize="24"/>

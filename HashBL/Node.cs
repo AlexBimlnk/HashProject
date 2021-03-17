@@ -3,7 +3,7 @@
 namespace HashBL
 {
     [Serializable]
-    class Node
+    internal class Node
     {
         private long data;
         private int level = 0;
