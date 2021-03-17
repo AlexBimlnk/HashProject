@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleModule", "ConsoleMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashBL", "HashBL\HashBL.csproj", "{3120630E-4490-4193-9FBB-B61C0C5AF7A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUI", "AppUI\AppUI.csproj", "{A5690AA1-2D07-4156-9A7C-EFEBBF690D84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUI", "AppUI\AppUI.csproj", "{62C74A72-A584-4647-A1AF-CECA76BE8478}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{3120630E-4490-4193-9FBB-B61C0C5AF7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3120630E-4490-4193-9FBB-B61C0C5AF7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3120630E-4490-4193-9FBB-B61C0C5AF7A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5690AA1-2D07-4156-9A7C-EFEBBF690D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5690AA1-2D07-4156-9A7C-EFEBBF690D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5690AA1-2D07-4156-9A7C-EFEBBF690D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5690AA1-2D07-4156-9A7C-EFEBBF690D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

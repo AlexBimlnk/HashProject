@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppUI"
         mc:Ignorable="d"
-        Title="Hash Application" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Hash Project" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="356,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="loginTextBox"/>
+        <TextBox x:Name="loginTextBox" HorizontalAlignment="Left" Margin="356,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="263,121,0,0" Text="Логин:" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="88" FontSize="24"/>
-        <TextBox HorizontalAlignment="Left" Margin="356,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AutomationProperties.Name="passwordTextBox"/>
+        <TextBox x:Name="passwordTextBox" HorizontalAlignment="Left" Margin="356,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="263,177,0,0" Text="Пароль:" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="88" FontSize="24"/>
         <Button Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="291,284,0,0" VerticalAlignment="Top" Width="196" Height="40" FontSize="20" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Click="btnReistrationClick"/>
         <Button Content="Войти" HorizontalAlignment="Left" Margin="339,239,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="20" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Click="btnSignInClick"/>

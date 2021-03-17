@@ -35,7 +35,7 @@ namespace AppUI
         private void btnSignInClick(object sender, RoutedEventArgs e)
         {
             GetTextFromTextBox(out login, out password);
-            
+
             //TODO
         }
 
@@ -54,8 +54,8 @@ namespace AppUI
 
         private void GetTextFromTextBox(out string login, out string password)
         {
-            login = loginTextBox.Text;
-            password = passwordTextBox.Text;
+            login = this.loginTextBox.Text;
+            password = this.passwordTextBox.Text;
         }
     }
 }
