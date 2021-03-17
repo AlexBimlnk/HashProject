@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HashBL;
 
 namespace AppUI
 {
@@ -20,19 +21,41 @@ namespace AppUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static AuthorizationPage AuthorizationPage = new AuthorizationPage();
-        public static RegistrationPage RegistrationPage = new RegistrationPage();
-        private static Frame MainFrame;
+        private static string login, password;
+        private static HashStructure hashStructure = new HashStructure();
+
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame = Main;
-            Main.Content = new AuthorizationPage();
         }
 
-        public static void SetFrame(Page page)
+        /// <summary>
+        /// Обработка клика мыши по кнопке "Войти"
+        /// </summary>
+        private void btnSignInClick(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = page;
+            GetTextFromTextBox(out login, out password);
+            
+            //TODO
+        }
+
+        /// <summary>
+        /// Обработка клика мыши по кнопке "Зарегистрироваться"
+        /// </summary>
+        private void btnReistrationClick(object sender, RoutedEventArgs e)
+        {
+            GetTextFromTextBox(out login, out password);
+
+            //TODO
+
+            //Например
+            hashStructure.AddHash(hashStructure.HashData(password));
+        }
+
+        private void GetTextFromTextBox(out string login, out string password)
+        {
+            login = loginTextBox.Text;
+            password = passwordTextBox.Text;
         }
     }
 }

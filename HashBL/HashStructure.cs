@@ -14,12 +14,12 @@ namespace HashBL
         private Tree hashTree = new Tree();
 
         /// <summary>
-        /// Constructor
+        /// Конструктор
         /// </summary>
         public HashStructure() { }
 
         /// <summary>
-        /// Constructor
+        /// Конструктор
         /// </summary>
         /// <param name="hash">Head of tree</param>
         public HashStructure(long hash)
@@ -28,9 +28,9 @@ namespace HashBL
         }
 
         /// <summary>
-        /// Adding an item to the hash tree
+        /// Добавление элемента в хеш-дерево
         /// </summary>
-        /// <param name="hash"></param>
+        /// <param name="hash">Хеш, который нужно добавить</param>
         public void AddHash(long hash)
         {
             if(hashTree.Count < maxItem)
@@ -41,14 +41,30 @@ namespace HashBL
         }
 
         /// <summary>
-        /// Print a list of tree nodes to the screen
+        /// Алгоритм хеширования данных
+        /// </summary>
+        /// <param name="data">Данные, которые нужно захешировать</param>
+        /// <returns>Возвращает хеш данных</returns>
+        public long HashData(string data)
+        {
+            long hash = -1;
+
+
+            return hash;
+        }
+
+        /// <summary>
+        /// Выводит на экран список узлов дерева
         /// </summary>
         public void PrintByTransverseBypass()
         {
             hashTree.PrintByTransverseBypass();
         }
 
-
+        /// <summary>
+        /// Сериализует объект класса в бинарный файл
+        /// </summary>
+        /// <param name="path">Путь к создаваемому файлу</param>
         public void Serealize(string path)
         {
             BinaryFormatter format = new BinaryFormatter();
