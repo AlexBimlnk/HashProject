@@ -10,11 +10,12 @@ namespace HashBL
         private Node Head;
         private int count = 0;
 
+
         /// <summary>
         /// Добавление узлов в дерево
         /// </summary>
         /// <param name="data">Данные, которые будут храниться в узле</param>
-        public void Push(long data)
+        public void Push(ulong data)
         {
             Node tmp = new Node(data);
             if (Head == null)
@@ -24,6 +25,23 @@ namespace HashBL
 
             count++;
         }
+
+        /// <summary>
+        /// Добавление в дерево узла с парой данных ключ-значение
+        /// </summary>
+        /// <param name="key"> Ключ по которому будет поиск (логин) </param>
+        /// <param name="value"> Значение прикрепленное к ключу </param>
+        public void Push(ValueTuple<ulong, ulong> tuple)
+        {
+            Node tmp = new Node(tuple);
+            if (Head == null)
+                Head = tmp;
+            else
+                Head.Add(tmp);
+
+            count++;
+        }
+
 
 
         /// <summary>

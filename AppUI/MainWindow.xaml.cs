@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,17 @@ namespace AppUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string folderName = "HashData";
         private static string login, password;
         private static HashStructure hashStructure = new HashStructure();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            // Создаем папку для хранения данных, если таковая отсутствует 
+            if (!Directory.Exists(folderName))
+                Directory.CreateDirectory(folderName);
         }
 
         /// <summary>
@@ -46,10 +52,23 @@ namespace AppUI
         {
             GetTextFromTextBox(out login, out password);
 
-            //TODO
+            ulong hashLogin = hashStructure.HashData(login);
+            ulong hashPassword = hashStructure.HashData(password);
 
-            //Например
-            hashStructure.AddHash(hashStructure.HashData(password));
+            try
+            {
+                hashStructure.AddHash( (hashLogin, hashPassword) );
+            }
+            catch(Exception)    // Если произошло переполнение данных - записываем в файл
+                                // И создаем новый объект
+            {
+                int fileIndex = Directory.GetFiles(folderName).Length;
+
+                hashStructure.Serealize($"{folderName}/file_{fileIndex}");
+
+                hashStructure = new HashStructure( (hashLogin, hashPassword) );
+            }
+
         }
 
         private void GetTextFromTextBox(out string login, out string password)

@@ -13,31 +13,59 @@ namespace HashBL
 
         private Tree hashTree = new Tree();
 
-        /// <summary>
-        /// Конструктор
-        /// </summary>
+
         public HashStructure() { }
 
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="hash">Head of tree</param>
-        public HashStructure(long hash)
+        public HashStructure(ulong hash)
         {
             hashTree.Push(hash);
         }
 
         /// <summary>
+        /// Конструктор для создания данных с парой данных ключ-значение
+        /// </summary>
+        public HashStructure(ValueTuple<ulong, ulong> tuple)
+        {
+            hashTree.Push(tuple);
+        }
+
+
+
+        /// <summary>
         /// Добавление элемента в хеш-дерево
         /// </summary>
         /// <param name="hash">Хеш, который нужно добавить</param>
-        public void AddHash(long hash)
+        public void AddHash(ulong hash)
         {
             if(hashTree.Count < maxItem)
                 hashTree.Push(hash);
             else
+                throw new Exception("Достигнут лимит кол-ва элементов");   
+        }
+
+        /// <summary>
+        /// Добавление элемента в хеш-дерево с парой данных
+        /// </summary>
+        public void AddHash(ValueTuple<ulong, ulong> tuple)
+        {
+            if (hashTree.Count < maxItem)
+                hashTree.Push(tuple);
+            else
                 throw new Exception("Достигнут лимит кол-ва элементов");
-                
+        }
+
+
+
+        public bool Search(ulong hash)
+        {
+            bool find = false;
+
+
+            return find;
         }
 
         /// <summary>
@@ -45,13 +73,14 @@ namespace HashBL
         /// </summary>
         /// <param name="data">Данные, которые нужно захешировать</param>
         /// <returns>Возвращает хеш данных</returns>
-        public long HashData(string data)
+        public ulong HashData(string data)
         {
-            long hash = -1;
+            ulong hash = 0;
 
 
             return hash;
         }
+
 
         /// <summary>
         /// Выводит на экран список узлов дерева

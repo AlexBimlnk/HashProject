@@ -5,15 +5,24 @@ namespace HashBL
     [Serializable]
     internal class Node
     {
-        private long data;
+        private ValueTuple<ulong, ulong> tuple;
+        private ulong data;
         private int level = 0;
         private Node rightNode;
         private Node leftNode;
 
-        public Node(long _data)
+        /// <summary>
+        /// Конструктор с реализацией хранения данных в кортеже
+        /// </summary>
+        public Node(ValueTuple<ulong, ulong> _tuple)
+        {
+            this.tuple = _tuple;
+        }
+        public Node(ulong _data)
         {
             data = _data;
         }
+
 
         public void Add(Node toAdd)
         {
@@ -33,6 +42,7 @@ namespace HashBL
                     this.rightNode.Add(toAdd);
             }
         }
+
         public void PrintTransverseBypass()
         {
             if (this.leftNode != null)
