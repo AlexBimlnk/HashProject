@@ -72,7 +72,7 @@ namespace HashBL
         {
             if (File.Exists(path))
             {
-                using (FileStream file = new FileStream($@"{path}.data", FileMode.Open))
+                using (FileStream file = new FileStream(path, FileMode.Open))
                 {
                     hashMap = (Dictionary<ulong, List<ulong>>)format.Deserialize(file);
                 }
