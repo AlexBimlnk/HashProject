@@ -11,7 +11,7 @@ namespace HashBL
     {
         private const int maxItems = 5;
         private Dictionary<ulong, List<ulong>> hashMap = new Dictionary<ulong, List<ulong>>(maxItems);
-
+        private BinaryFormatter format = new BinaryFormatter();
 
         public HashMap() { }
 
@@ -23,8 +23,10 @@ namespace HashBL
 
 
         /// <summary>
-        /// Добавление элемента в хеш-дерево с парой данных
+        /// Добавление элемента в хеш-словарь
+        /// <param name="tuple"> Котреж ключ-значение </param>
         /// </summary>
+        /// <exception cref="OverflowException"> Достигнуто максимальное кол-во элементов </exception>
         public void AddHash(ValueTuple<ulong, ulong> tuple)
         {
             if (hashMap.Count < maxItems)
@@ -55,14 +57,29 @@ namespace HashBL
         /// <param name="path">Путь к создаваемому файлу</param>
         public void Serealize(string path)
         {
-            BinaryFormatter format = new BinaryFormatter();
-
             using (FileStream file = new FileStream($@"{path}.data", FileMode.Create))
             {
                 format.Serialize(file, this.hashMap);
             }
         }
 
+        /// <summary>
+        /// Десериализует бинарный файл в хеш-словарь
+        /// </summary>
+        /// <param name="path"> Путь к десериализуемому файлу </param>
+        /// <exception cref="FileNotFoundException"> Путь не указывает на существующий файл  </exception>
+        public void Deserialize(string path)
+        {
+            if (File.Exists(path))
+            {
+                using (FileStream file = new FileStream($@"{path}.data", FileMode.Open))
+                {
+                    hashMap = (Dictionary<ulong, List<ulong>>)format.Deserialize(file);
+                }
+            }
+            else
+                throw new Exception("Такого файла не существует.");
+        }
 
         /// <summary>
         /// Алгоритм хеширования данных
