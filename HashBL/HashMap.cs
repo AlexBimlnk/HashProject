@@ -10,14 +10,14 @@ namespace HashBL
     public class HashMap
     {
         private const int maxItems = 200000;
-        private Dictionary<ulong, List<string>> hashMap = new Dictionary<ulong, List<string>>(maxItems);
+        private Dictionary<ulong, List<uint[]>> hashMap = new Dictionary<ulong, List<uint[]>>(maxItems);
         private BinaryFormatter format = new BinaryFormatter();
 
         public HashMap() { }
 
-        public HashMap(ValueTuple<ulong, string> tuple)
+        public HashMap(ValueTuple<ulong, uint[]> tuple)
         {
-            hashMap.Add(tuple.Item1, new List<string>() { tuple.Item2 });
+            hashMap.Add(tuple.Item1, new List<uint[]>() { tuple.Item2 });
         }
 
 
@@ -27,7 +27,7 @@ namespace HashBL
         /// <param name="tuple"> Котреж ключ-значение </param>
         /// </summary>
         /// <exception cref="OverflowException"> Достигнуто максимальное кол-во элементов </exception>
-        public void AddHash(ValueTuple<ulong, string> tuple)
+        public void AddHash(ValueTuple<ulong, uint[]> tuple)
         {
             if (hashMap.Count < maxItems)
             {
@@ -38,7 +38,7 @@ namespace HashBL
                         hashMap[tuple.Item1].Add(tuple.Item2);
                 }
                 else
-                    hashMap.Add(tuple.Item1, new List<string>() { tuple.Item2 });
+                    hashMap.Add(tuple.Item1, new List<uint[]>() { tuple.Item2 });
             }
             else
                 throw new Exception("Достигнут лимит кол-ва элементов");
@@ -59,7 +59,7 @@ namespace HashBL
         /// <param name="path">Путь к создаваемому файлу</param>
         public void Serealize(string path)
         {
-            using (FileStream file = new FileStream($@"{path}", FileMode.Create))
+            using (FileStream file = new FileStream(path, FileMode.Create))
             {
                 format.Serialize(file, this.hashMap);
             }
@@ -76,7 +76,7 @@ namespace HashBL
             {
                 using (FileStream file = new FileStream(path, FileMode.Open))
                 {
-                    hashMap = (Dictionary<ulong, List<string>>)format.Deserialize(file);
+                    hashMap = (Dictionary<ulong, List<uint[]>>)format.Deserialize(file);
                 }
             }
             else
@@ -97,7 +97,7 @@ namespace HashBL
             return hash;
         }
 
-        public Dictionary<ulong, List<string>> GetDict
+        public Dictionary<ulong, List<uint[]>> GetDict
         {
             get { return hashMap; }
             set { hashMap = value; }
