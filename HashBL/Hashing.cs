@@ -9,33 +9,6 @@ namespace HashBL
     /// </summary>
     public static class Hashing
     {
-        private static void PrintUi(uint a)
-        {
-            int step = 31;
-            while (step >= 0)
-            {
-                uint b = Convert.ToUInt32(Math.Pow(2, step));
-                Console.Write(a / b);
-                a %= b;
-                step--;
-                if (step % 8 == 7)
-                    Console.Write(' ');
-            }
-            Console.WriteLine();
-        }
-        private static void PrintListUi(List<uint> a)
-        {
-            foreach (var c in a)
-            {
-                PrintUi(c);
-            }
-        }
-        private static void PrintUiArr(uint[] a)
-        {
-            for (int i = 0; i < 5; i++)
-                PrintUi(a[i]);
-        }
-
         /// <summary>
         /// Циклический сдвиг влево
         /// </summary>
@@ -44,23 +17,10 @@ namespace HashBL
             b %= 32;
             if (b == 0)
                 return a;
-            uint mask = 0;
-            int count = b;
 
-            while (count != 0)
-            {
-                mask = mask << 1;
-                mask++;
-                count--;
-            }
-
-            mask = mask << (32 - b);
-
-            mask = mask & a;
-            mask = mask >> (32 - b);
-
+            uint x = a >> (32 - b);
             a = a << b;
-            a = a | mask;
+            a = a | x;
             return a;
         }
         private static List<uint> MakeUIList(string s)
@@ -110,8 +70,6 @@ namespace HashBL
 
             ret.Add(Convert.ToUInt32(s.Length * 8));
 
-            //PrintListUi(ret);
-
             for (int i = 16; i < 80; i++)
             {
                 tmp = ret[i - 3] ^ ret[i - 8] ^ ret[i - 14] ^ ret[i - 16];
@@ -119,9 +77,6 @@ namespace HashBL
                 ret.Add(tmp);
                 tmp = 0;
             }
-
-
-            //PrintListUi(ret);
 
             return ret;
         }
