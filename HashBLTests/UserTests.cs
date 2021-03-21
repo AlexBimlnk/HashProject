@@ -30,7 +30,10 @@ namespace HashBL.Tests
                     {
                         for (int i = 0; i < dict1[key].Count; i++)
                         {
-                            Assert.AreEqual(dict1[key][i], dict2[key][i]);
+                            for(int j = 0; j<dict1[key][i].Length; j++)
+                            {
+                                Assert.AreEqual(dict1[key][i][j], dict2[key][i][j]);
+                            }
                         }
                     }
                     else
