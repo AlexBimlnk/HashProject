@@ -7,33 +7,22 @@ namespace ConsoleModule
 {
     class Program
     {
-        static ulong HashForText(string s)
+        public static ulong HashForText(string s)
         {
             ulong answer = 0;
             short primeNumber = 67;
 
-            for(int i = 0; i<s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 answer += (ulong)(s[i] - '0' + 1) * (ulong)Math.Pow(primeNumber, i + 1);
             }
 
             return answer;
-
-            //long ans = 0;
-            //int r = 28;
-            //long rr = 1;
-
-            //for (int i = 0;i < s.Length;i++)
-            //{
-            //    ans += (s[i] - 'a' + 1) * rr;
-            //    rr *= r;
-            //}
-
-            //return ans;
         }
+
         static void Main(string[] args)
         {
-
+            //Console.WriteLine()
             Console.WriteLine(HashForText("lo"));
             Console.WriteLine(HashForText("gin"));
             Console.WriteLine(HashForText("login"));
