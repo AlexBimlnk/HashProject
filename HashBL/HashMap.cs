@@ -9,15 +9,15 @@ namespace HashBL
 {
     public class HashMap
     {
-        private const int maxItems = 5;
-        private Dictionary<ulong, List<ulong>> hashMap = new Dictionary<ulong, List<ulong>>(maxItems);
+        private const int maxItems = 200000;
+        private Dictionary<ulong, List<string>> hashMap = new Dictionary<ulong, List<string>>(maxItems);
         private BinaryFormatter format = new BinaryFormatter();
 
         public HashMap() { }
 
-        public HashMap(ValueTuple<ulong, ulong> tuple)
+        public HashMap(ValueTuple<ulong, string> tuple)
         {
-            hashMap.Add(tuple.Item1, new List<ulong>() { tuple.Item2 });
+            hashMap.Add(tuple.Item1, new List<string>() { tuple.Item2 });
         }
 
 
@@ -27,16 +27,18 @@ namespace HashBL
         /// <param name="tuple"> Котреж ключ-значение </param>
         /// </summary>
         /// <exception cref="OverflowException"> Достигнуто максимальное кол-во элементов </exception>
-        public void AddHash(ValueTuple<ulong, ulong> tuple)
+        public void AddHash(ValueTuple<ulong, string> tuple)
         {
             if (hashMap.Count < maxItems)
             {
                 //Если хеш-ключ уже существует сравниваем со списком и добавляем новое значение
                 if (hashMap.ContainsKey(tuple.Item1))
+                {
                     if (!hashMap[tuple.Item1].Contains(tuple.Item2))
                         hashMap[tuple.Item1].Add(tuple.Item2);
+                }
                 else
-                    hashMap.Add(tuple.Item1, new List<ulong>() { tuple.Item2 });
+                    hashMap.Add(tuple.Item1, new List<string>() { tuple.Item2 });
             }
             else
                 throw new Exception("Достигнут лимит кол-ва элементов");
@@ -57,7 +59,7 @@ namespace HashBL
         /// <param name="path">Путь к создаваемому файлу</param>
         public void Serealize(string path)
         {
-            using (FileStream file = new FileStream($@"{path}.data", FileMode.Create))
+            using (FileStream file = new FileStream($@"{path}", FileMode.Create))
             {
                 format.Serialize(file, this.hashMap);
             }
@@ -74,7 +76,7 @@ namespace HashBL
             {
                 using (FileStream file = new FileStream(path, FileMode.Open))
                 {
-                    hashMap = (Dictionary<ulong, List<ulong>>)format.Deserialize(file);
+                    hashMap = (Dictionary<ulong, List<string>>)format.Deserialize(file);
                 }
             }
             else
@@ -93,6 +95,12 @@ namespace HashBL
 
 
             return hash;
+        }
+
+        public Dictionary<ulong, List<string>> GetDict
+        {
+            get { return hashMap; }
+            set { hashMap = value; }
         }
     }
 }

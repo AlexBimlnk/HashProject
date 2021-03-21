@@ -4,14 +4,17 @@ using System.Text;
 
 namespace HashBL
 {
-    static class Hashing
+    /// <summary>
+    /// Класс реализующий разные алгоритмы хеширования
+    /// </summary>
+    public static class Hashing
     {
         /// <summary>
         /// Циклический сдвиг влево
         /// </summary>
         private static uint LeftRotate(uint a, int b)
         { 
-            b = b % 32;
+            b %= 32;
             if (b == 0)
                 return a;
             uint mask = 0;
@@ -40,7 +43,7 @@ namespace HashBL
             {
                 ulong b = Convert.ToUInt64(Math.Pow(2, step));
                 Console.Write(a / b);
-                a = a % b;
+                a %= b;
                 step--;
                 if (step % 8 == 7)
                     Console.Write(' ');
@@ -54,7 +57,7 @@ namespace HashBL
             {
                 uint b = Convert.ToUInt32(Math.Pow(2, step));
                 Console.Write(a / b);
-                a = a % b;
+                a %= b;
                 step--;
                 if (step % 8 == 7)
                     Console.Write(' ');
