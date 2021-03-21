@@ -9,11 +9,38 @@ namespace HashBL
     /// </summary>
     public static class Hashing
     {
+        private static void PrintUi(uint a)
+        {
+            int step = 31;
+            while (step >= 0)
+            {
+                uint b = Convert.ToUInt32(Math.Pow(2, step));
+                Console.Write(a / b);
+                a %= b;
+                step--;
+                if (step % 8 == 7)
+                    Console.Write(' ');
+            }
+            Console.WriteLine();
+        }
+        private static void PrintListUi(List<uint> a)
+        {
+            foreach (var c in a)
+            {
+                PrintUi(c);
+            }
+        }
+        private static void PrintUiArr(uint[] a)
+        {
+            for (int i = 0; i < 5; i++)
+                PrintUi(a[i]);
+        }
+
         /// <summary>
         /// Циклический сдвиг влево
         /// </summary>
         private static uint LeftRotate(uint a, int b)
-        { 
+        {
             b %= 32;
             if (b == 0)
                 return a;
@@ -36,146 +63,73 @@ namespace HashBL
             a = a | mask;
             return a;
         }
-        private static void PrintUl(ulong a)
+        private static List<uint> MakeUIList(string s)
         {
-            int step = 63;
-            while (step >= 0)
-            {
-                ulong b = Convert.ToUInt64(Math.Pow(2, step));
-                Console.Write(a / b);
-                a %= b;
-                step--;
-                if (step % 8 == 7)
-                    Console.Write(' ');
-            }
-            Console.WriteLine();
-        }
-        private static void PrintUi(uint a)
-        {
-            int step = 31;
-            while (step >= 0)
-            {
-                uint b = Convert.ToUInt32(Math.Pow(2, step));
-                Console.Write(a / b);
-                a %= b;
-                step--;
-                if (step % 8 == 7)
-                    Console.Write(' ');
-            }
-            Console.WriteLine();
-        }
-        private static Tuple<uint, uint> UlongToUint(ulong a)
-        {
-            Tuple<uint, uint> ret = new Tuple<uint, uint>(Convert.ToUInt32(a >> 32), Convert.ToUInt32(a & 0x00000000ffffffff));
-            return ret;
-        }
-        private static void PrintListUl(List<ulong> a)
-        {
-            foreach (var c in a)
-            {
-                PrintUl(c);
-            }
-        }
-        private static void PrintListUi(List<uint> a)
-        {
-            foreach (var c in a)
-            {
-                PrintUi(c);
-            }
-        }
-        private static string ConvertToHex(string asciiString)
-        {
-            string hex = "";
-            foreach (char c in asciiString)
-            {
-                int tmp = c;
-                hex += String.Format("{0:x2}", (uint)System.Convert.ToUInt32(tmp.ToString()));
-            }
-            return hex;
-        }
-        private static uint _16To10(char c)
-        {
-            if ('0' <= c && c <= '9')
-            {
-                return Convert.ToUInt16(c - '0');
-            }
-            else
-            {
-                return Convert.ToUInt16(c - 'a' + 10);
-            }
-        }
-        private static List<ulong> MakeULList(string s)
-        {
-            uint len = Convert.ToUInt16(s.Length);
-            s = ConvertToHex(s);
-            List<ulong> a = new List<ulong>();
-            ulong tmp = 0;
+            List<uint> ret = new List<uint>();
+            uint tmp = 0;
+
             for (int i = 0; i < s.Length; i++)
             {
-                tmp = tmp * 16 + _16To10(s[i]);
-                if (i % 16 == 15)
+                tmp = tmp << 8;
+                tmp += (Convert.ToUInt32(s[i]));
+
+                if (i % 4 == 3)
                 {
-                    a.Add(tmp);
+                    ret.Add(tmp);
                     tmp = 0;
                 }
             }
-            a.Add(tmp);
+            ret.Add(tmp);
 
-            tmp = a[a.Count - 1];
+            tmp = ret[ret.Count - 1];
 
             if (tmp != 0)
             {
                 int step = 0;
-                while ((tmp & 0xff00000000000000) == 0)
+                while ((tmp & 0xff000000) == 0)
                 {
                     tmp = tmp << 8;
                     step += 8;
                 }
-                ulong one = 1;
+                uint one = 1;
                 one = one << (step - 1);
                 tmp = tmp + one;
             }
             else
             {
                 tmp = 1;
-                tmp = tmp << 63;
+                tmp = tmp << 31;
             }
-            a[a.Count - 1] = tmp;
 
+            ret[ret.Count - 1] = tmp;
 
-            while (a.Count != 7)
+            while (ret.Count != 15)
             {
-                a.Add(0);
+                ret.Add(0);
             }
 
-            a.Add(len * 8);
+            ret.Add(Convert.ToUInt32(s.Length * 8));
 
-            return a;
-        }
-        private static List<uint> MakeUIList(List<ulong> a)
-        {
-            List<uint> ret = new List<uint>();
-
-            foreach (var b64 in a)
-            {
-                Tuple<uint, uint> tmp = UlongToUint(b64);
-                ret.Add(tmp.Item1);
-                ret.Add(tmp.Item2);
-            }
+            //PrintListUi(ret);
 
             for (int i = 16; i < 80; i++)
             {
-                uint tmp = ret[i - 3] ^ ret[i - 8] ^ ret[i - 14] ^ ret[i - 16];
+                tmp = ret[i - 3] ^ ret[i - 8] ^ ret[i - 14] ^ ret[i - 16];
                 tmp = LeftRotate(tmp, 1);
                 ret.Add(tmp);
+                tmp = 0;
             }
+
+
+            //PrintListUi(ret);
+
             return ret;
         }
 
         /// <summary>
         /// Алгоритм хеширования sha-1
         /// </summary>
-        public static string GetPasswordHash(string s)
+        public static uint[] GetPasswordHash(string s)
         {
             uint h0 = 0x67452301,
                  h1 = 0xEFCDAB89,
@@ -183,7 +137,7 @@ namespace HashBL
                  h3 = 0x10325476,
                  h4 = 0xC3D2E1F0;
 
-            List<uint> w = MakeUIList(MakeULList(s));
+            List<uint> w = MakeUIList(s);
 
             uint a = h0,
                  b = h1,
@@ -229,13 +183,7 @@ namespace HashBL
             h3 += d;
             h4 += e;
 
-            string ret = "";
-
-            ret += h0.ToString();
-            ret += h1.ToString();
-            ret += h2.ToString();
-            ret += h3.ToString();
-            ret += h4.ToString();
+            uint[] ret = { h0, h1, h2, h3, h4 };
 
             return ret;
         }
