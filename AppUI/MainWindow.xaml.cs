@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HashBL;
+using System.Diagnostics;
 
 namespace AppUI
 {
@@ -23,8 +25,10 @@ namespace AppUI
     public partial class MainWindow : Window
     {
         private const string folderName = "HashData";
+        private static string nowFileName;
         private static string login, password;
-        private static HashStructure hashStructure = new HashStructure();
+        //private static HashStructure hashStructure = new HashStructure();
+        private static HashMap hashMap = new HashMap();
 
         public MainWindow()
         {
@@ -33,7 +37,25 @@ namespace AppUI
             // Создаем папку для хранения данных, если таковая отсутствует 
             if (!Directory.Exists(folderName))
                 Directory.CreateDirectory(folderName);
+
+            string[] fileNames = Directory.GetFiles(folderName, "*.data");
+            if (fileNames.Length > 0)
+            {
+                hashMap.Deserialize(fileNames[fileNames.Length - 1]);
+                nowFileName = $@"{folderName}\file{fileNames.Length - 1}.data";
+            }
+            else
+                nowFileName = $@"{folderName}\file{fileNames.Length}.data";
+
+
+            this.Closing += SaveData;
         }
+
+        private void SaveData(object sender, CancelEventArgs e)
+        {
+            hashMap.Serealize(nowFileName);
+        }
+
 
         /// <summary>
         /// Обработка клика мыши по кнопке "Войти"
@@ -45,6 +67,7 @@ namespace AppUI
             //TODO
         }
 
+
         /// <summary>
         /// Обработка клика мыши по кнопке "Зарегистрироваться"
         /// </summary>
@@ -52,22 +75,49 @@ namespace AppUI
         {
             GetTextFromTextBox(out login, out password);
 
-            ulong hashLogin = hashStructure.HashData(login);
-            ulong hashPassword = hashStructure.HashData(password);
+            ulong loginHash = Hashing.GetHash(login);
 
-            try
+            bool find = hashMap.Search(loginHash);
+
+            HashMap tempHashMap = new HashMap();
+
+            //Если в ОЗУ его нет
+            if (!find)
             {
-                hashStructure.AddHash( (hashLogin, hashPassword) );
-            }
-            catch(Exception)    // Если произошло переполнение данных - записываем в файл
-                                // И создаем новый объект
-            {
-                int fileIndex = Directory.GetFiles(folderName).Length;
+                foreach (var i in Directory.GetFiles(folderName, "*.data"))
+                {
+                    tempHashMap.Deserialize(i);
+                    if (tempHashMap.Search(loginHash))
+                    {
+                        find = true;
+                        break;
+                    }
+                }
 
-                hashStructure.Serealize($"{folderName}/file_{fileIndex}");
+                //Если такого пользователя еще нет в БД
+                if (!find)
+                {
+                    try
+                    {
+                        hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password));
+                    }
+                    catch (OverflowException)
+                    {
+                        hashMap.Serealize(nowFileName);
+                        nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
+                        hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password));
+                        MessageBox.Show("Случилось переполнение хеш-таблицы.\n" +
+                                    "Программа сохранила данные в файл и записала нового пользователя.", "Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
 
-                hashStructure = new HashStructure( (hashLogin, hashPassword) );
+                }
             }
+            
+            if(find)
+                MessageBox.Show("Такой пользователь уже существет.", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+
 
         }
 

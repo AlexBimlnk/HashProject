@@ -9,48 +9,47 @@ namespace HashBL
 {
     public class HashMap
     {
-        private const int maxItems = 200000;
-        private Dictionary<ulong, List<uint[]>> hashMap = new Dictionary<ulong, List<uint[]>>(maxItems);
+        private const int maxItems = 2;
+        private Dictionary<ulong, uint[]> hashMap = new Dictionary<ulong, uint[]>(maxItems);
         private BinaryFormatter format = new BinaryFormatter();
 
         public HashMap() { }
 
-        public HashMap(ValueTuple<ulong, uint[]> tuple)
+        public HashMap(ulong loginHash, uint[] passwordHashData)
         {
-            hashMap.Add(tuple.Item1, new List<uint[]>() { tuple.Item2 });
+            hashMap.Add(loginHash, passwordHashData);
         }
 
 
 
         /// <summary>
         /// Добавление элемента в хеш-словарь
-        /// <param name="tuple"> Котреж ключ-значение </param>
         /// </summary>
-        /// <exception cref="OverflowException"> Достигнуто максимальное кол-во элементов </exception>
-        public void AddHash(ValueTuple<ulong, uint[]> tuple)
+        /// <param name="loginHash"> Ключ </param>
+        /// <param name="passwordHashData"> Значение </param>
+        /// <exception cref="OverflowException"> Возникает когда достигнуто макс. кол-во элементов </exception>
+        /// <exception cref="ArgumentException"> Возникает при попытке добавить одинаковых пользователей </exception>
+        public void AddHash(ulong loginHash, uint[] passwordHashData)
         {
-            if (hashMap.Count < maxItems)
-            {
-                //Если хеш-ключ уже существует сравниваем со списком и добавляем новое значение
-                if (hashMap.ContainsKey(tuple.Item1))
-                {
-                    if (!hashMap[tuple.Item1].Contains(tuple.Item2))
-                        hashMap[tuple.Item1].Add(tuple.Item2);
-                }
-                else
-                    hashMap.Add(tuple.Item1, new List<uint[]>() { tuple.Item2 });
-            }
+            if (Search(loginHash))
+                throw new ArgumentException("Такой логин уже есть");
             else
-                throw new Exception("Достигнут лимит кол-ва элементов");
+            {
+                if (hashMap.Count < maxItems)
+                    hashMap[loginHash] = passwordHashData;
+                else
+                    throw new OverflowException("Достигнуто максимальное кол-во элементов");
+            }
         }
 
         /// <summary>
         /// Поиск в хеш-словаре по хеш-ключу
         /// </summary>
         /// <param name="key"> Ключ искомого значения </param>
-        public void Search(ulong key)
+        /// <returns> true если ключ найден </returns>
+        public bool Search(ulong key)
         {
-
+            return hashMap.ContainsKey(key);
         }
 
         /// <summary>
@@ -62,6 +61,7 @@ namespace HashBL
             using (FileStream file = new FileStream(path, FileMode.Create))
             {
                 format.Serialize(file, this.hashMap);
+                hashMap = new Dictionary<ulong, uint[]>(maxItems);
             }
         }
 
@@ -76,7 +76,7 @@ namespace HashBL
             {
                 using (FileStream file = new FileStream(path, FileMode.Open))
                 {
-                    hashMap = (Dictionary<ulong, List<uint[]>>)format.Deserialize(file);
+                    hashMap = (Dictionary<ulong, uint[]>)format.Deserialize(file);
                 }
             }
             else
@@ -97,7 +97,7 @@ namespace HashBL
             return hash;
         }
 
-        public Dictionary<ulong, List<uint[]>> GetDict
+        public Dictionary<ulong, uint[]> GetDict
         {
             get { return hashMap; }
             set { hashMap = value; }

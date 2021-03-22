@@ -142,6 +142,7 @@ namespace HashBL
 
             return ret;
         }
+
         /// <summary>
         /// Алгоритм хеширования через простое число в степени
         /// </summary>

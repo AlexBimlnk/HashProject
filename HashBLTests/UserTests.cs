@@ -12,7 +12,6 @@ namespace HashBL.Tests
         void m(int count) 
         {
             //arrange
-            bool answer = true;
             var hashTable1 = User.HashUser(count);
 
             var dict1 = hashTable1.GetDict;
@@ -26,18 +25,10 @@ namespace HashBL.Tests
             {
                 if (dict2.ContainsKey(key))
                 {
-                    if (dict1[key].Count == dict2[key].Count)
+                    for(int i = 0; i<dict2[key].Length; i++)
                     {
-                        for (int i = 0; i < dict1[key].Count; i++)
-                        {
-                            for(int j = 0; j<dict1[key][i].Length; j++)
-                            {
-                                Assert.AreEqual(dict1[key][i][j], dict2[key][i][j]);
-                            }
-                        }
+                        Assert.AreEqual(dict2[key][i], dict1[key][i]);
                     }
-                    else
-                        Assert.Fail();
                 }
                 else
                     Assert.Fail();

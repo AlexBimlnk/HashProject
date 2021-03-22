@@ -13,7 +13,7 @@ namespace HashBL
             for (int i = 1; i <= count; i++)
             {
                 uint[] arr = Hashing.GetPasswordHash(i.ToString());
-                hashMap.AddHash( (Hashing.GetHash(i.ToString()), arr ));
+                hashMap.AddHash(Hashing.GetHash(i.ToString()), arr);
             }
 
             hashMap.Serealize("HashData/file1.data");
