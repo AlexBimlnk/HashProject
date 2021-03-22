@@ -27,7 +27,6 @@ namespace AppUI
         private const string folderName = "HashData";
         private static string nowFileName;
         private static string login, password;
-        //private static HashStructure hashStructure = new HashStructure();
         private static HashMap hashMap = new HashMap();
 
         public MainWindow()
@@ -58,13 +57,46 @@ namespace AppUI
 
 
         /// <summary>
+        /// Проверяет записан ли уже данный пользователь
+        /// </summary>
+        /// <param name="loginHash"> Хеш-ключ пользователя </param>
+        /// <returns> true если пользователь уже записан </returns>
+        private bool SearchUsers(ulong loginHash)
+        {
+            bool find = hashMap.Search(loginHash);
+
+            //Если в ОЗУ хеша нет
+            if (!find)
+            {
+                HashMap tempHashMap = new HashMap();
+                foreach (var i in Directory.GetFiles(folderName, "*.data"))
+                {
+                    tempHashMap.Deserialize(i);
+                    if (tempHashMap.Search(loginHash))
+                    {
+                        find = true;
+                        break;
+                    }
+                }
+            }
+
+            return find;
+        }
+
+
+        /// <summary>
         /// Обработка клика мыши по кнопке "Войти"
         /// </summary>
         private void btnSignInClick(object sender, RoutedEventArgs e)
         {
             GetTextFromTextBox(out login, out password);
 
-            //TODO
+            if(SearchUsers(Hashing.GetHash(login)))
+                MessageBox.Show("Доступ разрешен.", "",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+            else
+                MessageBox.Show("Такого пользователя не существует.", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
 
@@ -77,48 +109,27 @@ namespace AppUI
 
             ulong loginHash = Hashing.GetHash(login);
 
-            bool find = hashMap.Search(loginHash);
+            bool find = SearchUsers(loginHash);
 
-            HashMap tempHashMap = new HashMap();
-
-            //Если в ОЗУ его нет
-            if (!find)
-            {
-                foreach (var i in Directory.GetFiles(folderName, "*.data"))
-                {
-                    tempHashMap.Deserialize(i);
-                    if (tempHashMap.Search(loginHash))
-                    {
-                        find = true;
-                        break;
-                    }
-                }
-
-                //Если такого пользователя еще нет в БД
-                if (!find)
-                {
-                    try
-                    {
-                        hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password));
-                    }
-                    catch (OverflowException)
-                    {
-                        hashMap.Serealize(nowFileName);
-                        nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
-                        hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password));
-                        MessageBox.Show("Случилось переполнение хеш-таблицы.\n" +
-                                    "Программа сохранила данные в файл и записала нового пользователя.", "Внимание",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-
-                }
-            }
-            
-            if(find)
+            if (find)
                 MessageBox.Show("Такой пользователь уже существет.", "Ошибка",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
-
-
+            else
+            {
+                try
+                {
+                    hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password));
+                }
+                catch (OverflowException)
+                {
+                    hashMap.Serealize(nowFileName);
+                    nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
+                    hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password));
+                    MessageBox.Show("Случилось переполнение хеш-таблицы.\n" +
+                                "Программа сохранила данные в файл и записала нового пользователя.", "Внимание",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
 
         private void GetTextFromTextBox(out string login, out string password)

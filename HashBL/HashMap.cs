@@ -83,20 +83,6 @@ namespace HashBL
                 throw new Exception("Такого файла не существует.");
         }
 
-        /// <summary>
-        /// Алгоритм хеширования данных
-        /// </summary>
-        /// <param name="data"> Данные, которые нужно захешировать </param>
-        /// <returns> Хеш данных </returns>
-        public ulong GetHashCode(string data)
-        {
-            ulong hash = 0;
-
-
-
-            return hash;
-        }
-
         public Dictionary<ulong, uint[]> GetDict
         {
             get { return hashMap; }
