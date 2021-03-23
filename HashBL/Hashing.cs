@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HashBL
 {
@@ -10,7 +9,7 @@ namespace HashBL
     public static class Hashing
     {
         /// <summary>
-        /// Циклический сдвиг влево
+        /// Циклический сдвиг влево.
         /// </summary>
         private static uint LeftRotate(uint a, int b)
         {
@@ -82,7 +81,7 @@ namespace HashBL
         }
 
         /// <summary>
-        /// Алгоритм хеширования sha-1
+        /// Алгоритм хеширования sha-1.
         /// </summary>
         public static uint[] GetPasswordHash(string s)
         {
@@ -144,7 +143,7 @@ namespace HashBL
         }
 
         /// <summary>
-        /// Алгоритм хеширования через простое число в степени
+        /// Алгоритм хеширования через простое число в степени.
         /// </summary>
         public static ulong GetHash(string s)
         {
@@ -160,7 +159,7 @@ namespace HashBL
         }
 
         /// <summary>
-        /// Генерация соли
+        /// Генерация соли.
         /// </summary>
         public static string GetSalt(int n = 12)
         {

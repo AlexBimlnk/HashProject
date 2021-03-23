@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleModule", "ConsoleModule\ConsoleModule.csproj", "{88CDEB7D-A14C-43E0-91FE-17D8157E2E51}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashBL", "HashBL\HashBL.csproj", "{3120630E-4490-4193-9FBB-B61C0C5AF7A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppUI", "AppUI\AppUI.csproj", "{62C74A72-A584-4647-A1AF-CECA76BE8478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashBLTests", "HashBLTests\HashBLTests.csproj", "{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashBLTests", "HashBLTests\HashBLTests.csproj", "{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{88CDEB7D-A14C-43E0-91FE-17D8157E2E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88CDEB7D-A14C-43E0-91FE-17D8157E2E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88CDEB7D-A14C-43E0-91FE-17D8157E2E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88CDEB7D-A14C-43E0-91FE-17D8157E2E51}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3120630E-4490-4193-9FBB-B61C0C5AF7A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3120630E-4490-4193-9FBB-B61C0C5AF7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3120630E-4490-4193-9FBB-B61C0C5AF7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU

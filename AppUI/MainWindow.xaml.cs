@@ -1,21 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using HashBL;
-using System.Diagnostics;
 
 namespace AppUI
 {
@@ -57,103 +44,86 @@ namespace AppUI
 
 
         /// <summary>
-        /// Проверяет записан ли уже данный пользователь
+        /// Проверяет записан ли уже данный пользователь.
         /// </summary>
-        /// <param name="loginHash"> Хеш-ключ пользователя </param>
-        /// <returns> true если пользователь уже записан </returns>
-        private bool SearchUsersWithData(ulong loginHash, ref Tuple <uint[], string> Value)
+        /// <param name="key"> Хеш-ключ пользователя. </param>
+        /// <param name="value"> Значение у ключа, если пользователь будет найден </param>
+        /// <returns> True если пользователь уже записан. </returns>    
+        /// <summary>
+        private bool SearchUser(ulong key, out Tuple<uint[], string> value)
         {
-            bool find = hashMap.SearchWithData(loginHash, ref Value);
+            value = hashMap.Search(key);
 
-            //Если в ОЗУ хеша нет
-            if (!find)
+            //Если в ОЗУ нет хеша
+            if (value == null)
             {
                 HashMap tempHashMap = new HashMap();
                 foreach (var i in Directory.GetFiles(folderName, "*.data"))
                 {
                     tempHashMap.Deserialize(i);
-                    if (tempHashMap.SearchWithData(loginHash, ref Value))
-                    {
-                        find = true;
-                        break;
-                    }
+                    value = tempHashMap.Search(key);
+
+                    //Если нашли пользователя
+                    if(value != null)
+                        return true;
                 }
             }
 
-            return find;
-        }
-
-        private bool SearchUsers(ulong loginHash)
-        {
-            bool find = hashMap.Search(loginHash);
-
-            //Если в ОЗУ хеша нет
-            if (!find)
-            {
-                HashMap tempHashMap = new HashMap();
-                foreach (var i in Directory.GetFiles(folderName, "*.data"))
-                {
-                    tempHashMap.Deserialize(i);
-                    if (tempHashMap.Search(loginHash))
-                    {
-                        find = true;
-                        break;
-                    }
-                }
-            }
-
-            return find;
+            return value == null ? false : true;
         }
 
         /// <summary>
-        /// Обработка клика мыши по кнопке "Войти"
+        /// Обработка клика мыши по кнопке "Войти".
         /// </summary>
         private void btnSignInClick(object sender, RoutedEventArgs e)
         {
             GetTextFromTextBox(out login, out password);
-            uint[] Hash = { 0 };
-            string Salt = "";
-            Tuple<uint[], string> Value = new Tuple<uint[], string>(Hash, Salt);
-            if(SearchUsersWithData(Hashing.GetHash(login), ref Value))
-            {
-                Hash = Hashing.GetPasswordHash(password + Value.Item2);
-                bool Check = true;
 
-                for (int i = 0;i < Hash.Length && i < Value.Item1.Length;i++)
+            ulong loginHash = Hashing.GetHash(login);
+            Tuple<uint[], string> hashValue = null;
+
+            if(SearchUser(loginHash, out hashValue))
+            {
+                uint[] hashSearchUser = hashValue.Item1;
+                string saltSearchUser = hashValue.Item2;
+
+                uint[] hashUser = Hashing.GetPasswordHash(password + hashValue.Item2);
+
+                bool check = true;
+
+                for (int i = 0; i < hashUser.Length && i < hashValue.Item1.Length; i++)
                 {
-                    if (Hash[i] != Value.Item1[i])
+                    if (hashUser[i] != hashValue.Item1[i])
                     {
-                        Check = false;
+                        check = false;
                         break;
                     }
                 }
 
-                if (Check)
+                if (check)
                     MessageBox.Show("Доступ разрешен.", "",
                                 MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Неправильный пароль.", "Ошибка",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
-
-
             }
             else
                 MessageBox.Show("Такого пользователя не существует.", "Ошибка",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
+                                    MessageBoxButton.OK, MessageBoxImage.Error);       
         }
 
 
         /// <summary>
-        /// Обработка клика мыши по кнопке "Зарегистрироваться"
+        /// Обработка клика мыши по кнопке "Зарегистрироваться".
         /// </summary>
         private void btnReistrationClick(object sender, RoutedEventArgs e)
         {
             GetTextFromTextBox(out login, out password);
 
             ulong loginHash = Hashing.GetHash(login);
-            bool find = SearchUsers(loginHash);
+            Tuple<uint[], string> hashValue;
 
-            if (find)
+            if (SearchUser(loginHash, out hashValue))
                 MessageBox.Show("Такой пользователь уже существет.", "Ошибка",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             else
