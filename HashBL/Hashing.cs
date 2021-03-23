@@ -158,5 +158,31 @@ namespace HashBL
 
             return answer;
         }
+
+        /// <summary>
+        /// Генерация соли
+        /// </summary>
+        public static string GetSalt(int n = 12)
+        {
+            string ret = "";
+
+            Random GenChar = new Random();
+            Random GenReg = new Random();
+
+            for (int i = 0; i < n; i++)
+            {
+                char c;
+                if (GenReg.Next() % 2 == 0)
+                    c = 'a';
+                else
+                    c = 'A';
+
+                c = Convert.ToChar(c + GenChar.Next() % 26);
+
+                ret += c;
+            }
+
+            return ret;
+        }
     }
 }
