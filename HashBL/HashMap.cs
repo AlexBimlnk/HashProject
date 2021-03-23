@@ -55,6 +55,15 @@ namespace HashBL
         {
             return _hashMap.ContainsKey(key);
         }
+        public bool SearchWithData(ulong key, ref Tuple<uint[], string> Value)
+        {
+            if (_hashMap.ContainsKey(key))
+            {
+                Value = _hashMap[key];
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Сериализует хеш-словарь класса в бинарный файл
