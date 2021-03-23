@@ -25,9 +25,9 @@ namespace HashBL.Tests
             {
                 if (dict2.ContainsKey(key))
                 {
-                    for(int i = 0; i<dict2[key].Length; i++)
+                    for(int i = 0; i<dict2[key].Item1.Length; i++)
                     {
-                        Assert.AreEqual(dict2[key][i], dict1[key][i]);
+                        Assert.AreEqual(dict2[key].Item1[i], dict1[key].Item1[i]);
                     }
                 }
                 else
