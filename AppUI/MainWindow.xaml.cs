@@ -84,9 +84,6 @@ namespace AppUI
 
             if(SearchUser(loginHash, out hashValue))
             {
-                uint[] hashSearchUser = hashValue.Item1;
-                string saltSearchUser = hashValue.Item2;
-
                 uint[] hashUser = Hashing.GetPasswordHash(password + hashValue.Item2);
 
                 bool check = true;
