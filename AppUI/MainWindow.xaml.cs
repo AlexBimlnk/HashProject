@@ -41,7 +41,10 @@ namespace AppUI
         {
             hashMap.Serealize(nowFileName);
         }
-
+        private void DisplayMessage(string message, string tittle, MessageBoxImage Type)
+        {
+            MessageBox.Show(message, tittle, MessageBoxButton.OK, Type);
+        }
 
         /// <summary>
         /// Проверяет записан ли уже данный пользователь.
@@ -98,15 +101,15 @@ namespace AppUI
                 }
 
                 if (check)
-                    MessageBox.Show("Доступ разрешен.", "",
-                                MessageBoxButton.OK, MessageBoxImage.Information);
+                {
+                    DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
+                    //this.Close();
+                }
                 else
-                    MessageBox.Show("Неправильный пароль.", "Ошибка",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
+                    DisplayMessage("Неправильный пароль.", "Ошибка", MessageBoxImage.Error);
             }
             else
-                MessageBox.Show("Такого пользователя не существует.", "Ошибка",
-                                    MessageBoxButton.OK, MessageBoxImage.Error);       
+                DisplayMessage("Такого пользователя не существует.", "Ошибка", MessageBoxImage.Error);       
         }
 
 
@@ -121,8 +124,7 @@ namespace AppUI
             Tuple<uint[], string> hashValue;
 
             if (SearchUser(loginHash, out hashValue))
-                MessageBox.Show("Такой пользователь уже существет.", "Ошибка",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
+                DisplayMessage("Такой пользователь уже существет.", "Ошибка", MessageBoxImage.Error);
             else
             {
                 string salt = Hashing.GetSalt();
@@ -135,9 +137,8 @@ namespace AppUI
                     hashMap.Serealize(nowFileName);
                     nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
                     hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password + salt), salt);
-                    MessageBox.Show("Случилось переполнение хеш-таблицы.\n" +
-                                "Программа сохранила данные в файл и записала нового пользователя.", "Внимание",
-                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    DisplayMessage("Случилось переполнение хеш-таблицы.\n" +
+                                "Программа сохранила данные в файл и записала нового пользователя.", "Внимание", MessageBoxImage.Information);
                 }
             }
         }
