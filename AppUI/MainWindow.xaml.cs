@@ -15,11 +15,22 @@ namespace AppUI
         private static string nowFileName;
         private static string login, password;
         private static HashMap hashMap = new HashMap();
+        private static int MinLoginLen = 4, MaxLoginLen = 9;
+        private static int MinPsdLen = 8, MaxPsdLen = 16;
+        enum ErrorType
+        {
+            LoginSize,
+            PasswordSize,
+            LoginCorrect,
+            PasswordCorrect,
+            LoginExsist,
+            UnMatching
 
+        }
         public MainWindow()
         {
             InitializeComponent();
-
+            
             // Создаем папку для хранения данных, если таковая отсутствует 
             if (!Directory.Exists(folderName))
                 Directory.CreateDirectory(folderName);
@@ -41,11 +52,7 @@ namespace AppUI
         {
             hashMap.Serealize(nowFileName);
         }
-        private void DisplayMessage(string message, string tittle, MessageBoxImage Type)
-        {
-            MessageBox.Show(message, tittle, MessageBoxButton.OK, Type);
-        }
-
+        
         /// <summary>
         /// Проверяет записан ли уже данный пользователь.
         /// </summary>
@@ -80,13 +87,18 @@ namespace AppUI
         /// </summary>
         private void btnSignInClick(object sender, RoutedEventArgs e)
         {
+            MyMessageBox.Text = "";
             GetTextFromTextBox(out login, out password);
+
+            if (!CheckData(login, password))
+                return;
 
             ulong loginHash = Hashing.GetHash(login);
             Tuple<uint[], string> hashValue = null;
 
             if(SearchUser(loginHash, out hashValue))
             {
+                MyMessageBox.Text = "";
                 uint[] hashUser = Hashing.GetPasswordHash(password + hashValue.Item2);
 
                 bool check = true;
@@ -106,10 +118,10 @@ namespace AppUI
                     //this.Close();
                 }
                 else
-                    DisplayMessage("Неправильный пароль.", "Ошибка", MessageBoxImage.Error);
+                    DisplayError(ErrorType.UnMatching);
             }
             else
-                DisplayMessage("Такого пользователя не существует.", "Ошибка", MessageBoxImage.Error);       
+                DisplayError(ErrorType.UnMatching);
         }
 
 
@@ -118,18 +130,23 @@ namespace AppUI
         /// </summary>
         private void btnReistrationClick(object sender, RoutedEventArgs e)
         {
+            MyMessageBox.Text = "";
             GetTextFromTextBox(out login, out password);
+
+            if (!CheckData(login, password))
+                return;
 
             ulong loginHash = Hashing.GetHash(login);
             Tuple<uint[], string> hashValue;
 
             if (SearchUser(loginHash, out hashValue))
-                DisplayMessage("Такой пользователь уже существет.", "Ошибка", MessageBoxImage.Error);
+                DisplayError(ErrorType.LoginExsist);
             else
             {
+                MyMessageBox.Text = "";
                 string salt = Hashing.GetSalt();
                 try
-                {   
+                {
                     hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password + salt), salt);
                 }
                 catch (OverflowException)
@@ -147,6 +164,69 @@ namespace AppUI
         {
             login = this.loginTextBox.Text;
             password = this.passwordTextBox.Text;
+        }
+        private bool CheckData(string login, string psd)
+        {
+            if (!(MinLoginLen <= login.Length && login.Length <= MaxLoginLen))
+            {
+                DisplayError(ErrorType.LoginSize);
+                return false;
+            }
+
+            for (int i = 0; i < login.Length; i++)
+                if (!('a' <= login[i] && login[i] <= 'z') &&
+                    !('A' <= login[i] && login[i] <= 'Z') &&
+                    !('0' <= login[i] && login[i] <= '9'))
+                {
+                    DisplayError( ErrorType.LoginCorrect);
+                    return false;
+                }
+
+            if (!(MinPsdLen <= password.Length && password.Length <= MaxPsdLen))
+            {
+                DisplayError(ErrorType.PasswordSize);
+                return false;
+            }
+
+            for (int i = 0; i < password.Length; i++)
+                if (!('a' <= password[i] && password[i] <= 'z') &&
+                    !('A' <= password[i] && password[i] <= 'Z') &&
+                    !('0' <= password[i] && password[i] <= '9'))
+                {
+                    DisplayError(ErrorType.PasswordCorrect);
+                    return false;
+                }
+
+            return true;
+        }
+        
+        private void DisplayMessage(string message, string tittle, MessageBoxImage Type)
+        {
+            MessageBox.Show(message, tittle, MessageBoxButton.OK, Type);
+        }
+        private void DisplayError(ErrorType Type)
+        {
+            switch(Type)
+            {
+                case ErrorType.LoginSize:
+                    MyMessageBox.Text = $"* Длина логина должна быть от {MinLoginLen} до {MaxLoginLen} символов";
+                    break;
+                case ErrorType.PasswordSize:
+                    MyMessageBox.Text = $"* Длина пароля должна быть от {MinPsdLen} до {MaxPsdLen} символов";
+                    break;
+                case ErrorType.LoginCorrect:
+                    MyMessageBox.Text = "* Логин может содержать только цифры и буквы";
+                    break;
+                case ErrorType.PasswordCorrect:
+                    MyMessageBox.Text = "* Пароль может содержать только цифры и буквы";
+                    break;
+                case ErrorType.LoginExsist:
+                    MyMessageBox.Text = "* Такой пользователь уже существует";
+                    break;
+                case ErrorType.UnMatching:
+                    MyMessageBox.Text = "* Неправильный логин или пароль";
+                    break;
+            }
         }
     }
 }
