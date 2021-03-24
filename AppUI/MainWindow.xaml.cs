@@ -221,10 +221,10 @@ namespace AppUI
                     MyMessageBox.Text = $"* Длина пароля должна быть от {MinPsdLen} до {MaxPsdLen} символов";
                     break;
                 case ErrorType.LoginIncorrect:
-                    MyMessageBox.Text = "* Логин может содержать только цифры и буквы";
+                    MyMessageBox.Text = "* Логин может содержать только цифры и латинские буквы";
                     break;
                 case ErrorType.PasswordIncorrect:
-                    MyMessageBox.Text = "* Пароль может содержать только цифры и буквы";
+                    MyMessageBox.Text = "* Пароль может содержать только цифры и латинские буквы";
                     break;
                 case ErrorType.LoginExsist:
                     MyMessageBox.Text = "* Такой пользователь уже существует";
