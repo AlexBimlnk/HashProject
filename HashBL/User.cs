@@ -19,7 +19,6 @@ namespace HashBL
 
             hashMap.Serealize("HashData/file1.data");
 
-            //Console.WriteLine(Hashing.GetPasswordHash("sha"));
             Console.WriteLine("Hashing end");
 
             return hashMap;

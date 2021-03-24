@@ -21,12 +21,12 @@ namespace AppUI
         {
             LoginSize,
             PasswordSize,
-            LoginCorrect,
-            PasswordCorrect,
+            LoginIncorrect,
+            PasswordIncorrect,
             LoginExsist,
             UnMatching
-
         }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -165,6 +165,11 @@ namespace AppUI
             login = this.loginTextBox.Text;
             password = this.passwordTextBox.Text;
         }
+
+        /// <summary>
+        /// Проверка корректности ввода
+        /// </summary>
+        /// <returns> True, если данные корректны </returns>
         private bool CheckData(string login, string psd)
         {
             if (!(MinLoginLen <= login.Length && login.Length <= MaxLoginLen))
@@ -178,7 +183,7 @@ namespace AppUI
                     !('A' <= login[i] && login[i] <= 'Z') &&
                     !('0' <= login[i] && login[i] <= '9'))
                 {
-                    DisplayError( ErrorType.LoginCorrect);
+                    DisplayError( ErrorType.LoginIncorrect);
                     return false;
                 }
 
@@ -193,7 +198,7 @@ namespace AppUI
                     !('A' <= password[i] && password[i] <= 'Z') &&
                     !('0' <= password[i] && password[i] <= '9'))
                 {
-                    DisplayError(ErrorType.PasswordCorrect);
+                    DisplayError(ErrorType.PasswordIncorrect);
                     return false;
                 }
 
@@ -204,6 +209,7 @@ namespace AppUI
         {
             MessageBox.Show(message, tittle, MessageBoxButton.OK, Type);
         }
+
         private void DisplayError(ErrorType Type)
         {
             switch(Type)
@@ -214,10 +220,10 @@ namespace AppUI
                 case ErrorType.PasswordSize:
                     MyMessageBox.Text = $"* Длина пароля должна быть от {MinPsdLen} до {MaxPsdLen} символов";
                     break;
-                case ErrorType.LoginCorrect:
+                case ErrorType.LoginIncorrect:
                     MyMessageBox.Text = "* Логин может содержать только цифры и буквы";
                     break;
-                case ErrorType.PasswordCorrect:
+                case ErrorType.PasswordIncorrect:
                     MyMessageBox.Text = "* Пароль может содержать только цифры и буквы";
                     break;
                 case ErrorType.LoginExsist:

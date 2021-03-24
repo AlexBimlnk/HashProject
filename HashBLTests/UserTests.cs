@@ -38,63 +38,6 @@ namespace HashBL.Tests
         }
 
         [TestMethod()]
-        public void HashUser_UIntSpeedTest()
-        {
-            //arrange
-            uint i1 = uint.MaxValue;
-            uint i2 = uint.MaxValue;
-            uint i3 = uint.MaxValue;
-            uint i4 = uint.MaxValue;
-            uint i5 = uint.MaxValue;
-
-            uint[] arrI = { i1, i2, i3, i4, i5 };
-
-            uint j1 = uint.MaxValue;
-            uint j2 = uint.MaxValue;
-            uint j3 = uint.MaxValue;
-            uint j4 = uint.MaxValue;
-            uint j5 = uint.MaxValue;
-
-            uint[] arrJ = { j1, j2, j3, j4, j5 };
-
-
-            for(int i = 0; i<arrI.Length; i++)
-            {
-                Assert.AreEqual(arrI[i], arrJ[i]);
-            }
-
-
-        }
-
-        [TestMethod()]
-        public void HashUser_StringSpeedTest()
-        {
-            string R()
-            {
-                //arrange
-                uint i1 = uint.MaxValue;
-                uint i2 = uint.MaxValue;
-                uint i3 = uint.MaxValue;
-                uint i4 = uint.MaxValue;
-                uint i5 = uint.MaxValue;
-
-                string answer = "";
-                answer += i1.ToString();
-                answer += i2.ToString();
-                answer += i3.ToString();
-                answer += i4.ToString();
-                answer += i5.ToString();
-
-                return answer;
-            }
-            //arrange
-            string a1 = R();
-            string a2 = R();
-
-            Assert.AreEqual(a1, a2);
-        }
-
-        [TestMethod()]
         public void HashUser_Test10k()
         {
             m(10000);

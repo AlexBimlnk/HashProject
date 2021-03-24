@@ -25,16 +25,13 @@ namespace HashBL
         {
             if (Search(loginHash) != null)
                 throw new ArgumentException("Такой логин уже есть");
-            else
+            else if(hashMap.Count < maxItems)
             {
-                if (hashMap.Count < maxItems)
-                {
-                    Tuple<uint[], string> Value = new Tuple<uint[], string>(passwordHashData, salt);
-                    hashMap[loginHash] = Value;
-                }
-                else
-                    throw new OverflowException("Достигнуто максимальное кол-во элементов");
+                Tuple<uint[], string> Value = new Tuple<uint[], string>(passwordHashData, salt);
+                hashMap[loginHash] = Value;
             }
+            else
+                throw new OverflowException("Достигнуто максимальное кол-во элементов");
         }
 
         public Tuple<uint[], string> Search(ulong key)
