@@ -2,7 +2,7 @@
 
 namespace HashBL
 {
-    public interface IHashTable
+    public interface IHashTable <Tvalue>
     {
         /// <summary>
         /// Добавление элемента в хеш-словарь.
@@ -11,14 +11,14 @@ namespace HashBL
         /// <param name="passwordHashData"> Значение. </param>
         /// <exception cref="OverflowException"> Возникает когда достигнуто макс. кол-во элементов. </exception>
         /// <exception cref="ArgumentException"> Возникает при попытке добавить одинаковых пользователей. </exception>
-        public void AddHash(ulong key, uint[] hash, string salt);
+        public void AddHash(ulong key, Tvalue value);
 
         /// <summary>
         /// Поиск в хеш-словаре по хеш-ключу.
         /// </summary>
         /// <param name="key"> Ключ искомого значения. </param>
         /// <returns> Значение ключа, если он существует. Иначе вернет null. </returns>
-        public void Search(ulong key);
+        public Tvalue Search(ulong key);
 
         /// <summary>
         /// Сериализует хеш-словарь класса в бинарный файл.

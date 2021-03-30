@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace HashBL
 {
-    public class HashMap <TValue>
+    public class HashMap <TValue> : IHashTable <TValue>
     {
         private const int maxItems = 2;
         private Dictionary<ulong, TValue> hashMap = new Dictionary<ulong, TValue>(maxItems);
