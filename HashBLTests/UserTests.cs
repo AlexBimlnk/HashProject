@@ -14,11 +14,11 @@ namespace HashBL.Tests
             //arrange
             var hashTable1 = User.HashUser(count);
 
-            var dict1 = hashTable1.GetDict;
+            var dict1 = hashTable1.GetHashDict;
 
             //act
             hashTable1.Deserialize("HashData/file1.data");
-            var dict2 = hashTable1.GetDict;
+            var dict2 = hashTable1.GetHashDict;
 
             //assert
             foreach (var key in dict1.Keys)

@@ -7,9 +7,10 @@ namespace HashBL
 {
     public class HashMap <TValue> : IHashTable <TValue>
     {
-        private const int maxItems = 2;
+        private const int maxItems = 200000;
         private Dictionary<ulong, TValue> hashMap = new Dictionary<ulong, TValue>(maxItems);
         private BinaryFormatter format = new BinaryFormatter();
+
         public int Count => hashMap.Count;
 
         public HashMap() { }
