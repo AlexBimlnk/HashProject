@@ -6,15 +6,15 @@ namespace HashBL
 {
     public static class User
     {
-        public static HashMap HashUser(int count)
+        public static HashMap<Tuple<uint[],string>> HashUser(int count)
         {
-            HashMap hashMap = new HashMap();
+            HashMap<Tuple<uint[], string>> hashMap = new HashMap<Tuple<uint[], string>>();
 
             for (int i = 1; i <= count; i++)
             {
                 string salt = Hashing.GetSalt();
                 uint[] arr = Hashing.GetPasswordHash(i.ToString() + salt);
-                hashMap.AddHash(Hashing.GetHash(i.ToString()), arr, salt);
+                hashMap.AddHash(Hashing.GetHash(i.ToString()), new Tuple<uint[], string>(arr, salt));
             }
 
             hashMap.Serealize("HashData/file1.data");

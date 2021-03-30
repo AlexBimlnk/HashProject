@@ -14,7 +14,7 @@ namespace AppUI
         private const string folderName = "HashData";
         private static string nowFileName;
         private static string login, password;
-        private static HashMap hashMap = new HashMap();
+        private static HashMap<Tuple<uint[], string>> hashMap = new HashMap<Tuple<uint[], string>>();
         private static int MinLoginLen = 4, MaxLoginLen = 9;
         private static int MinPsdLen = 8, MaxPsdLen = 16;
         enum ErrorType
@@ -67,7 +67,7 @@ namespace AppUI
             //Если в ОЗУ нет хеша
             if (value == null)
             {
-                HashMap tempHashMap = new HashMap();
+                HashMap<Tuple<uint[], string>> tempHashMap = new HashMap<Tuple<uint[], string>>();
                 foreach (var i in Directory.GetFiles(folderName, "*.data"))
                 {
                     tempHashMap.Deserialize(i);
@@ -147,13 +147,13 @@ namespace AppUI
                 string salt = Hashing.GetSalt();
                 try
                 {
-                    hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password + salt), salt);
+                    hashMap.AddHash(loginHash, new Tuple<uint[],string>(Hashing.GetPasswordHash(password + salt), salt));
                 }
                 catch (OverflowException)
                 {
                     hashMap.Serealize(nowFileName);
                     nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
-                    hashMap.AddHash(loginHash, Hashing.GetPasswordHash(password + salt), salt);
+                    hashMap.AddHash(loginHash, new Tuple<uint[], string>(Hashing.GetPasswordHash(password + salt), salt));
                     DisplayMessage("Случилось переполнение хеш-таблицы.\n" +
                                 "Программа сохранила данные в файл и записала нового пользователя.", "Внимание", MessageBoxImage.Information);
                 }

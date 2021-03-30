@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace HashBL
 {
@@ -18,7 +18,7 @@ namespace HashBL
         /// </summary>
         /// <param name="key"> Ключ искомого значения. </param>
         /// <returns> Значение ключа, если он существует. Иначе вернет null. </returns>
-        public Tuple<uint[], string> Search(ulong key);
+        public void Search(ulong key);
 
         /// <summary>
         /// Сериализует хеш-словарь класса в бинарный файл.

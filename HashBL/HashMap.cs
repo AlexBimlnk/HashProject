@@ -5,41 +5,38 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace HashBL
 {
-    public class HashMap : IHashTable
+    public class HashMap <TValue>
     {
-        public const int maxItems = 2;
-        private Dictionary<ulong, Tuple<uint[], string>> hashMap = new Dictionary<ulong, Tuple<uint[], string>>(maxItems);
-
+        private const int maxItems = 2;
+        private Dictionary<ulong, TValue> hashMap = new Dictionary<ulong, TValue>(maxItems);
         private BinaryFormatter format = new BinaryFormatter();
+        public int Count => hashMap.Count;
 
         public HashMap() { }
         
-        public HashMap(ulong loginHash, uint[] passwordHashData, string salt)
+        public HashMap(ulong loginHash, TValue value)
         {
-            Tuple<uint[], string> Value = new Tuple<uint[], string>(passwordHashData, salt);
-            hashMap.Add(loginHash, Value);
+            hashMap.Add(loginHash, value);
         }
 
 
-        public void AddHash(ulong loginHash, uint[] passwordHashData, string salt)
+        public void AddHash(ulong loginHash, TValue value)
         {
             if (Search(loginHash) != null)
                 throw new ArgumentException("Такой логин уже есть");
+
             else if(hashMap.Count < maxItems)
-            {
-                Tuple<uint[], string> Value = new Tuple<uint[], string>(passwordHashData, salt);
-                hashMap[loginHash] = Value;
-            }
+                hashMap[loginHash] = value;
             else
                 throw new OverflowException("Достигнуто максимальное кол-во элементов");
         }
 
-        public Tuple<uint[], string> Search(ulong key)
+        public TValue Search(ulong key)
         {
             if (hashMap.ContainsKey(key))
                 return hashMap[key];
 
-            return null;
+            return default;
         }
 
         public void Serealize(string path)
@@ -47,7 +44,7 @@ namespace HashBL
             using (FileStream file = new FileStream(path, FileMode.Create))
             {
                 format.Serialize(file, this.hashMap);
-                hashMap = new Dictionary<ulong, Tuple<uint[], string>>(maxItems);
+                hashMap = new Dictionary<ulong, TValue>(maxItems);
             }
         }
 
@@ -57,14 +54,14 @@ namespace HashBL
             {
                 using (FileStream file = new FileStream(path, FileMode.Open))
                 {
-                    hashMap = (Dictionary<ulong, Tuple<uint[], string>>)format.Deserialize(file);
+                    hashMap = (Dictionary<ulong, TValue>)format.Deserialize(file);
                 }
             }
             else
                 throw new Exception("Такого файла не существует.");
         }
 
-        public Dictionary<ulong, Tuple<uint[], string>> GetDict
+        public Dictionary<ulong, TValue> GetHashDict
         {
             get { return hashMap; }
             set { hashMap = value; }
