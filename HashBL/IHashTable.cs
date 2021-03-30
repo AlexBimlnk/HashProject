@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace HashBL
+﻿namespace HashBL
 {
     public interface IHashTable <Tvalue>
     {
