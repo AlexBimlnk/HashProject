@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HashBL
 {
-    internal interface IAccount
+    public interface IAccount
     {
         /// <summary>
         /// Возвращает баланс, можно сделать сеттер приватным

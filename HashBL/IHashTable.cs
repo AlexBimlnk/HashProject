@@ -1,6 +1,6 @@
 ﻿namespace HashBL
 {
-    internal interface IHashTable <Tvalue>
+    public interface IHashTable <Tvalue>
     {
         /// <summary>
         /// Добавление элемента в хеш-словарь.
