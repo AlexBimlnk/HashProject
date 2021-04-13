@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HashBL
+﻿namespace HashBL
 {
     public interface IAccount
     {
         /// <summary>
-        /// Возвращает баланс, можно сделать сеттер приватным
+        /// Возвращает статус аккаунта
+        /// </summary>
+        public string Status { get; }
+
+        /// <summary>
+        /// Возвращает баланс
         /// </summary>
         public int Balance { get; }
-     
+
         /// <summary>
         /// Зачисляет деньги на баланс
         /// </summary>
-        public void AddMoney(int a);
+        /// <param name="count"> Количество зачисляемых средств </param>
+        public void AddMoney(int count);
 
         /// <summary>
         /// Отчет об аккаунте, это могут быть его какие то данные, или жалования пользователя

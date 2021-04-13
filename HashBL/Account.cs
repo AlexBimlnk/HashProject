@@ -4,61 +4,44 @@ using System.Text;
 
 namespace HashBL
 {
-    public class Account: IAccount
+    public class Account : IAccount
     {
         private enum Statuses
         {
             Normal,
             Banned,
             Freezed,
-            Deleted
         };
 
-        private int balance;
-        private string login;
-        private string salt;
-        private uint[] hashedpassword;
+        public int Balance { get; private set; }
+        public string Login { get; private set; }
+        public uint[] HashedPassword { get; private set; }
+        public string Salt { get; private set; }
+
         private Statuses status;
 
-        public Account(string newlogin, uint[] newhashedpassword, string newsalt)
+
+        public Account(string _login, uint[] _hashedPassword, string _salt)
         {
-            login = newlogin;
-            hashedpassword = newhashedpassword;
-            salt = newsalt;
-            balance = 0;
             status = Statuses.Normal;
 
-            Balance = balance;
-            Login = login;
-            HashedPassword = hashedpassword;
-            Salt = salt;
+            Balance = 0;
+            Login = _login;
+            HashedPassword = _hashedPassword;
+            Salt = _salt;
         }
 
-        public int Balance 
-        { 
-            get { return balance; }
-            private set { balance = value; }
-        }
-        public string Login
+
+        public string Status
         {
-            get { return login; }
-            private set { login = value; }
-        }
-        public uint[] HashedPassword
-        {
-            get { return hashedpassword; }
-            private set { hashedpassword = value; }
-        }
-        public string Salt
-        {
-            get { return salt; }
-            private set { salt = value; }
+            get { return status.ToString(); }
         }
 
-        public void AddMoney(int a)
+
+        public void AddMoney(int count)
         {
-            if (a > 0)
-                balance += a;
+            if (count > 0)
+                Balance += count;
         }
 
         public void Report()
