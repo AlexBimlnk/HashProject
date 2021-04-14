@@ -94,18 +94,18 @@ namespace AppUI
                 return;
 
             ulong loginHash = Hashing.GetHash(login);
-            Account hashValue = null;
+            Account accountValue = null;
 
-            if(SearchUser(loginHash, out hashValue))
+            if(SearchUser(loginHash, out accountValue))
             {
                 MyMessageBox.Text = "";
-                uint[] hashUser = Hashing.GetPasswordHash(password + hashValue.Salt);
+                uint[] hashUser = Hashing.GetPasswordHash(password + accountValue.Salt);
 
                 bool check = true;
 
-                for (int i = 0; i < hashUser.Length && i < hashValue.HashedPassword.Length; i++)
+                for (int i = 0; i < hashUser.Length && i < accountValue.HashedPassword.Length; i++)
                 {
-                    if (hashUser[i] != hashValue.HashedPassword[i])
+                    if (hashUser[i] != accountValue.HashedPassword[i])
                     {
                         check = false;
                         break;
@@ -113,10 +113,7 @@ namespace AppUI
                 }
 
                 if (check)
-                {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
-                    //this.Close();
-                }
                 else
                     DisplayError(ErrorType.UnMatching);
             }
@@ -137,9 +134,9 @@ namespace AppUI
                 return;
 
             ulong loginHash = Hashing.GetHash(login);
-            Account hashValue;
+            Account accountValue;
 
-            if (SearchUser(loginHash, out hashValue))
+            if (SearchUser(loginHash, out accountValue))
                 DisplayError(ErrorType.LoginExsist);
             else
             {
