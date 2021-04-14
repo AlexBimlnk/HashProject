@@ -4,6 +4,7 @@ using System.Text;
 
 namespace HashBL
 {
+    [Serializable]
     public class Account : IAccount
     {
         private enum Statuses

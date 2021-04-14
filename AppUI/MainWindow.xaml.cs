@@ -14,7 +14,7 @@ namespace AppUI
         private const string folderName = "HashData";
         private static string nowFileName;
         private static string login, password;
-        private static HashMap<Tuple<uint[], string>> hashMap = new HashMap<Tuple<uint[], string>>();
+        private static HashMap<Account> hashMap = new HashMap<Account>();
         private static int MinLoginLen = 4, MaxLoginLen = 9;
         private static int MinPsdLen = 8, MaxPsdLen = 16;
         enum ErrorType
@@ -60,14 +60,14 @@ namespace AppUI
         /// <param name="value"> Значение у ключа, если пользователь будет найден </param>
         /// <returns> True если пользователь уже записан. </returns>    
         /// <summary>
-        private bool SearchUser(ulong key, out Tuple<uint[], string> value)
+        private bool SearchUser(ulong key, out Account value)
         {
             value = hashMap.Search(key);
 
             //Если в ОЗУ нет хеша
             if (value == null)
             {
-                HashMap<Tuple<uint[], string>> tempHashMap = new HashMap<Tuple<uint[], string>>();
+                HashMap<Account> tempHashMap = new HashMap<Account>();
                 foreach (var i in Directory.GetFiles(folderName, "*.data"))
                 {
                     tempHashMap.Deserialize(i);
@@ -94,18 +94,18 @@ namespace AppUI
                 return;
 
             ulong loginHash = Hashing.GetHash(login);
-            Tuple<uint[], string> hashValue = null;
+            Account accountValue = null;
 
-            if(SearchUser(loginHash, out hashValue))
+            if(SearchUser(loginHash, out accountValue))
             {
                 MyMessageBox.Text = "";
-                uint[] hashUser = Hashing.GetPasswordHash(password + hashValue.Item2);
+                uint[] hashUser = Hashing.GetPasswordHash(password + accountValue.Salt);
 
                 bool check = true;
 
-                for (int i = 0; i < hashUser.Length && i < hashValue.Item1.Length; i++)
+                for (int i = 0; i < hashUser.Length && i < accountValue.HashedPassword.Length; i++)
                 {
-                    if (hashUser[i] != hashValue.Item1[i])
+                    if (hashUser[i] != accountValue.HashedPassword[i])
                     {
                         check = false;
                         break;
@@ -113,10 +113,7 @@ namespace AppUI
                 }
 
                 if (check)
-                {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
-                    //this.Close();
-                }
                 else
                     DisplayError(ErrorType.UnMatching);
             }
@@ -137,9 +134,9 @@ namespace AppUI
                 return;
 
             ulong loginHash = Hashing.GetHash(login);
-            Tuple<uint[], string> hashValue;
+            Account accountValue;
 
-            if (SearchUser(loginHash, out hashValue))
+            if (SearchUser(loginHash, out accountValue))
                 DisplayError(ErrorType.LoginExsist);
             else
             {
@@ -147,13 +144,13 @@ namespace AppUI
                 string salt = Hashing.GetSalt();
                 try
                 {
-                    hashMap.AddHash(loginHash, new Tuple<uint[],string>(Hashing.GetPasswordHash(password + salt), salt));
+                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetPasswordHash(password + salt), salt));
                 }
                 catch (OverflowException)
                 {
                     hashMap.Serealize(nowFileName);
                     nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
-                    hashMap.AddHash(loginHash, new Tuple<uint[], string>(Hashing.GetPasswordHash(password + salt), salt));
+                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetPasswordHash(password + salt), salt));
                     DisplayMessage("Случилось переполнение хеш-таблицы.\n" +
                                 "Программа сохранила данные в файл и записала нового пользователя.", "Внимание", MessageBoxImage.Information);
                 }
