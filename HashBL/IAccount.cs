@@ -3,19 +3,19 @@
     public interface IAccount
     {
         /// <summary>
-        /// Возвращает статус аккаунта
+        /// Возвращает статус аккаунта.
         /// </summary>
         public string Status { get; }
 
         /// <summary>
-        /// Возвращает баланс
+        /// Возвращает баланс.
         /// </summary>
         public int Balance { get; }
 
         /// <summary>
-        /// Зачисляет деньги на баланс
+        /// Зачисляет деньги на баланс.
         /// </summary>
-        /// <param name="count"> Количество зачисляемых средств </param>
+        /// <param name="count"> Количество зачисляемых средств. </param>
         public void AddMoney(int count);
 
         /// <summary>

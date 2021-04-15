@@ -15,7 +15,7 @@
         /// Поиск в хеш-словаре по хеш-ключу.
         /// </summary>
         /// <param name="key"> Ключ искомого значения. </param>
-        /// <returns> Значение ключа, если он существует. Иначе вернет null. </returns>
+        /// <returns> Значение ключа, если он существует. Иначе вернет default. </returns>
         public Tvalue Search(ulong key);
 
         /// <summary>

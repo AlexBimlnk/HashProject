@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AppUI"
         mc:Ignorable="d"
         Title="Hash Project" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid Visibility="Visible">
+    <Grid x:Name="MainGrid" Visibility="Visible">
         <TextBox x:Name="loginTextBox" HorizontalAlignment="Left" Margin="261,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="168,68,0,0" Text="Логин:" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="73" FontSize="24"/>
         <TextBox x:Name="passwordTextBox" HorizontalAlignment="Left" Margin="261,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Height="40" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -14,5 +14,6 @@
         <Button Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="261,245,0,0" VerticalAlignment="Top" Width="196" Height="40" FontSize="20" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Click="btnReistrationClick"/>
         <Button Content="Войти" HorizontalAlignment="Left" Margin="261,193,0,0" VerticalAlignment="Top" Width="196" Height="40" FontSize="20" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Click="btnSignInClick"/>
         <TextBox x:Name="MyMessageBox" HorizontalAlignment="Left" Margin="223,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="392" Visibility="Visible" AutomationProperties.HelpText="" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="11" IsReadOnly="True" IsUndoEnabled="False" Foreground="Red" IsEnabled="False" TextAlignment="Left"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

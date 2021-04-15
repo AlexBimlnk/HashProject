@@ -113,7 +113,11 @@ namespace AppUI
                 }
 
                 if (check)
+                {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
+                    MainFrame.Content = new AccountPage(MainFrame);
+                }
+                    
                 else
                     DisplayError(ErrorType.UnMatching);
             }
