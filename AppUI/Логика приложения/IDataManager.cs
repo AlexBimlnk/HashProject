@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AppUI
+﻿namespace AppUI
 {
     public interface IDataManager
     {
@@ -14,14 +10,21 @@ namespace AppUI
         /// <summary>
         /// Сохранить данные.
         /// </summary>
-        public abstract void SaveData();
+        public void SaveData();
 
         /// <summary>
-        /// Найти пользователя.
+        /// Добавить данные.
         /// </summary>
-        /// <param name="key"> Хеш логина. </param>
-        /// <param name="value"> Выходной параметр - аккаунт пользователя. </param>
-        /// <returns> Возвращает TRUE, если пользователь найден, иначе возвращает FALSE/ </returns>
-        public abstract bool SearchUser(ulong key, out Account value);
+        /// <param name="login"> Логин пользователя. </param>
+        /// <param name="password"> Пароль пользователя. </param>
+        public void AddData(string login, string password);
+
+        /// <summary>
+        /// Проверяет записан ли уже данный пользователь.
+        /// </summary>
+        /// <param name="key"> Хеш-ключ пользователя. </param>
+        /// <param name="value"> Значение у ключа, если пользователь будет найден. </param>
+        /// <returns> Возвращает TRUE, если пользователь найден, иначе возвращает FALSE. </returns>
+        public bool SearchUser(ulong key, out Account value);
     }
 }

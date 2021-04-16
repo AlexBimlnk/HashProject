@@ -19,10 +19,15 @@ namespace AppUI
     public partial class AccountPage : Page
     {
         Frame MainFrame;
-        public AccountPage(Frame frame)
+        Account myAccount;
+
+        public AccountPage(Frame frame, Account account)
         {
             InitializeComponent();
+            myAccount = account;
             MainFrame = frame;
+            UserNameLabel.Content = myAccount.Login;
+            BalanceCountLabel.Content = myAccount.Balance.ToString();
         }
 
         private void exitBtn_Click(object sender, RoutedEventArgs e)

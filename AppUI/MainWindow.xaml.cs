@@ -11,12 +11,11 @@ namespace AppUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string folderName = "HashData";
-        private static string nowFileName;
+        private IDataManager dataManager;
         private static string login, password;
-        private static HashMap<Account> hashMap = new HashMap<Account>();
         private static int MinLoginLen = 4, MaxLoginLen = 9;
         private static int MinPsdLen = 8, MaxPsdLen = 16;
+
         enum ErrorType
         {
             LoginSize,
@@ -31,20 +30,7 @@ namespace AppUI
         {
             InitializeComponent();
 
-            IDataManager manager = new LocalDataManager();
-
-            // Создаем папку для хранения данных, если таковая отсутствует 
-            if (!Directory.Exists(folderName))
-                Directory.CreateDirectory(folderName);
-
-            string[] fileNames = Directory.GetFiles(folderName, "*.data");
-            if (fileNames.Length > 0)
-            {
-                hashMap.Deserialize(fileNames[fileNames.Length - 1]);
-                nowFileName = $@"{folderName}\file{fileNames.Length - 1}.data";
-            }
-            else
-                nowFileName = $@"{folderName}\file{fileNames.Length}.data";
+            dataManager = new LocalDataManager();
 
 
             this.Closing += SaveData;
@@ -52,37 +38,9 @@ namespace AppUI
 
         private void SaveData(object sender, CancelEventArgs e)
         {
-            hashMap.Serealize(nowFileName);
+            dataManager.SaveData();
         }
         
-        /// <summary>
-        /// Проверяет записан ли уже данный пользователь.
-        /// </summary>
-        /// <param name="key"> Хеш-ключ пользователя. </param>
-        /// <param name="value"> Значение у ключа, если пользователь будет найден </param>
-        /// <returns> True если пользователь уже записан. </returns>    
-        /// <summary>
-        private bool SearchUser(ulong key, out Account value)
-        {
-            value = hashMap.Search(key);
-
-            //Если в ОЗУ нет хеша
-            if (value == null)
-            {
-                HashMap<Account> tempHashMap = new HashMap<Account>();
-                foreach (var i in Directory.GetFiles(folderName, "*.data"))
-                {
-                    tempHashMap.Deserialize(i);
-                    value = tempHashMap.Search(key);
-
-                    //Если нашли пользователя
-                    if(value != null)
-                        return true;
-                }
-            }
-
-            return value == null ? false : true;
-        }
 
         /// <summary>
         /// Обработка клика мыши по кнопке "Войти".
@@ -98,7 +56,7 @@ namespace AppUI
             ulong loginHash = Hashing.GetHash(login);
             Account accountValue = null;
 
-            if(SearchUser(loginHash, out accountValue))
+            if(dataManager.SearchUser(loginHash, out accountValue))
             {
                 MyMessageBox.Text = "";
                 uint[] hashUser = Hashing.GetShaHash(password + accountValue.Salt);
@@ -117,7 +75,7 @@ namespace AppUI
                 if (check)
                 {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
-                    MainFrame.Content = new AccountPage(MainFrame);
+                    MainFrame.Content = new AccountPage(MainFrame, accountValue);
                 }
                     
                 else
@@ -142,21 +100,17 @@ namespace AppUI
             ulong loginHash = Hashing.GetHash(login);
             Account accountValue;
 
-            if (SearchUser(loginHash, out accountValue))
+            if (dataManager.SearchUser(loginHash, out accountValue))
                 DisplayError(ErrorType.LoginExsist);
             else
             {
                 MyMessageBox.Text = "";
-                string salt = Hashing.GetSalt();
                 try
                 {
-                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetShaHash(password + salt), salt));
+                    dataManager.AddData(login, password);
                 }
                 catch (OverflowException)
                 {
-                    hashMap.Serealize(nowFileName);
-                    nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
-                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetShaHash(password + salt), salt));
                     DisplayMessage("Случилось переполнение хеш-таблицы.\n" +
                                 "Программа сохранила данные в файл и записала нового пользователя.", "Внимание", MessageBoxImage.Information);
                 }
