@@ -75,7 +75,8 @@ namespace AppUI
                 if (check)
                 {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
-                    MainFrame.Content = new AccountPage(MainFrame, accountValue);
+                    MainFrame.Content = new AccountPage(MainFrame, ref accountValue);
+                    dataManager.UpdateData(accountValue);
                 }
                     
                 else

@@ -9,12 +9,12 @@
       Title="AccountPage">
 
     <Grid Background="White">
-        <Button x:Name="exitBtn" Content="Выйти из аккаунта" HorizontalAlignment="Center" Margin="0,329,0,0" VerticalAlignment="Top" Height="47" Width="168" Click="exitBtn_Click"/>
-        <Label Content="Баланс: " HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Height="45" Width="97" Foreground="#FF0A0A0A" FontSize="24"/>
-        <Label x:Name="BalanceCountLabel" Content="" HorizontalAlignment="Left" Margin="112,94,0,0" VerticalAlignment="Top" Height="45" Width="678" Foreground="Black" FontSize="24"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="397,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="279" Height="35" FontSize="20"/>
-        <Label Content="Кол-во средств к зачислению: " HorizontalAlignment="Left" Margin="37,180,0,0" VerticalAlignment="Top" Height="45" Width="360" Foreground="#FF040404" FontSize="24"/>
-        <Button x:Name="addMoneyBtn" Content="Зачислить средства" HorizontalAlignment="Center" Margin="0,277,0,0" VerticalAlignment="Top" Height="47" Width="168"/>
+        <Button x:Name="exitBtn" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="49,327,0,0" VerticalAlignment="Top" Height="51" Width="178" Click="exitBtn_Click"/>
+        <Label Content="Баланс: " HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="45" Width="97" Foreground="#FF0A0A0A" FontSize="24"/>
+        <Label x:Name="BalanceCountLabel" Content="" HorizontalAlignment="Left" Margin="112,60,0,0" VerticalAlignment="Top" Height="45" Width="678" Foreground="Black" FontSize="24"/>
+        <TextBox x:Name="moneyBox" HorizontalAlignment="Left" Margin="370,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="397" Height="35" FontSize="20"/>
+        <Label Content="Кол-во средств к зачислению: " HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Height="45" Width="346" Foreground="#FF040404" FontSize="24"/>
+        <Button x:Name="addMoneyBtn" Content="Зачислить средства" HorizontalAlignment="Left" Margin="599,197,0,0" VerticalAlignment="Top" Height="47" Width="168" Click="addMoneyBtn_Click"/>
         <Label Content="Имя пользователя:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="45" Width="217" Foreground="#FF0A0A0A" FontSize="24"/>
         <Label x:Name="UserNameLabel" Content="" HorizontalAlignment="Left" Margin="232,10,0,0" VerticalAlignment="Top" Height="45" Width="558" Foreground="Black" FontSize="24"/>
 

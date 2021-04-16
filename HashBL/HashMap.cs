@@ -46,6 +46,11 @@ namespace HashBL
             return default;
         }
 
+        public void UpdateValue(ulong key, TValue value)
+        {
+            hashMap[key] = value;
+        }
+
         public void Serealize(string path)
         {
             using (FileStream file = new FileStream(path, FileMode.Create))

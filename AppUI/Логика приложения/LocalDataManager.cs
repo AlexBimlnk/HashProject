@@ -87,5 +87,11 @@ namespace AppUI
                 throw new OverflowException();
             }
         }
+
+        public void UpdateData(Account value)
+        {
+            ulong key = Hashing.GetHash(value.Login);
+            hashMap.UpdateValue(key, value);
+        }
     }
 }

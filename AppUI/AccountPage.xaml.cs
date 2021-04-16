@@ -21,7 +21,7 @@ namespace AppUI
         Frame MainFrame;
         Account myAccount;
 
-        public AccountPage(Frame frame, Account account)
+        public AccountPage(Frame frame, ref Account account)
         {
             InitializeComponent();
             myAccount = account;
@@ -33,6 +33,26 @@ namespace AppUI
         private void exitBtn_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = null;
+        }
+
+        private void addMoneyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string money_s = moneyBox.Text;
+            if (money_s.Length != 0)
+            {
+                for (int i = 0;i < money_s.Length;i++)
+                    if (!('0' <= money_s[i] && money_s[i] <= '9'))
+                    {
+                        
+                    }
+
+                int money = int.Parse(money_s);
+
+                myAccount.AddMoney(money);
+                BalanceCountLabel.Content = myAccount.Balance.ToString();
+
+                moneyBox.Clear();
+            }
         }
     }
 }
