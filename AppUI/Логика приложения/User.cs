@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using HashBL;
 
-namespace HashBL
+namespace AppUI
 {
     public static class User
     {
@@ -10,14 +9,12 @@ namespace HashBL
         {
             HashMap<Account> hashMap = new HashMap<Account>();
 
-            //HashMap<Tuple<uint[], string>> hashMap = new HashMap<Tuple<uint[], string>>();
-
             Account account;
 
             for (int i = 1; i <= count; i++)
             {
                 string salt = Hashing.GetSalt();
-                uint[] arr = Hashing.GetPasswordHash(i.ToString() + salt);
+                uint[] arr = Hashing.GetShaHash(i.ToString() + salt);
 
                 account = new Account(i.ToString(), arr, salt);
                 hashMap.AddHash(Hashing.GetHash(account.Login), account);

@@ -83,7 +83,7 @@ namespace HashBL
         /// <summary>
         /// Алгоритм хеширования sha-1.
         /// </summary>
-        public static uint[] GetPasswordHash(string s)
+        public static uint[] GetShaHash(string s)
         {
             uint h0 = 0x67452301,
                  h1 = 0xEFCDAB89,

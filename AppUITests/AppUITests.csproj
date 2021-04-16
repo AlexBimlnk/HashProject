@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HashBL\HashBL.csproj" />
+    <ProjectReference Include="..\AppUI\AppUI.csproj" />
   </ItemGroup>
 
 </Project>

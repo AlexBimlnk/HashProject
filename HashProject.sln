@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashBL", "HashBL\HashBL.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppUI", "AppUI\AppUI.csproj", "{62C74A72-A584-4647-A1AF-CECA76BE8478}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashBLTests", "HashBLTests\HashBLTests.csproj", "{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUITests", "AppUITests\AppUITests.csproj", "{A031079B-8741-4535-A210-16DAFDF6D481}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C74A72-A584-4647-A1AF-CECA76BE8478}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA8AC460-4B50-4064-9D12-3C18A8CF0F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A031079B-8741-4535-A210-16DAFDF6D481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A031079B-8741-4535-A210-16DAFDF6D481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A031079B-8741-4535-A210-16DAFDF6D481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A031079B-8741-4535-A210-16DAFDF6D481}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

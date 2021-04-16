@@ -1,4 +1,4 @@
-﻿namespace HashBL
+﻿namespace AppUI
 {
     public interface IAccount
     {

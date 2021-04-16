@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HashBL
+namespace AppUI
 {
     [Serializable]
     public class Account : IAccount

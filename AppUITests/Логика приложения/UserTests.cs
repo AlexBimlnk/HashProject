@@ -1,15 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HashBL;
+using AppUI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HashBL.Tests
+namespace AppUI.Tests
 {
     [TestClass()]
     public class UserTests
     {
-        void m(int count) 
+        void m(int count)
         {
             //arrange
             var hashTable1 = User.HashUser(count);
@@ -25,7 +25,7 @@ namespace HashBL.Tests
             {
                 if (dict2.ContainsKey(key))
                 {
-                    for(int i = 0; i<dict2[key].HashedPassword.Length; i++)
+                    for (int i = 0; i < dict2[key].HashedPassword.Length; i++)
                     {
                         Assert.AreEqual(dict2[key].HashedPassword[i], dict1[key].HashedPassword[i]);
                     }

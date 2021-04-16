@@ -30,7 +30,9 @@ namespace AppUI
         public MainWindow()
         {
             InitializeComponent();
-            
+
+            IDataManager manager = new LocalDataManager();
+
             // Создаем папку для хранения данных, если таковая отсутствует 
             if (!Directory.Exists(folderName))
                 Directory.CreateDirectory(folderName);
@@ -99,7 +101,7 @@ namespace AppUI
             if(SearchUser(loginHash, out accountValue))
             {
                 MyMessageBox.Text = "";
-                uint[] hashUser = Hashing.GetPasswordHash(password + accountValue.Salt);
+                uint[] hashUser = Hashing.GetShaHash(password + accountValue.Salt);
 
                 bool check = true;
 
@@ -148,13 +150,13 @@ namespace AppUI
                 string salt = Hashing.GetSalt();
                 try
                 {
-                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetPasswordHash(password + salt), salt));
+                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetShaHash(password + salt), salt));
                 }
                 catch (OverflowException)
                 {
                     hashMap.Serealize(nowFileName);
                     nowFileName = $@"{folderName}\file{Directory.GetFiles(folderName, "*.data").Length}.data";
-                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetPasswordHash(password + salt), salt));
+                    hashMap.AddHash(loginHash, new Account(login, Hashing.GetShaHash(password + salt), salt));
                     DisplayMessage("Случилось переполнение хеш-таблицы.\n" +
                                 "Программа сохранила данные в файл и записала нового пользователя.", "Внимание", MessageBoxImage.Information);
                 }
