@@ -12,11 +12,11 @@
         public void AddHash(ulong key, Tvalue value);
 
         /// <summary>
-        /// Поиск в хеш-словаре по хеш-ключу.
+        /// Возвращает значение данного ключа.
         /// </summary>
         /// <param name="key"> Ключ искомого значения. </param>
         /// <returns> Значение ключа, если он существует. Иначе вернет default. </returns>
-        public Tvalue Search(ulong key);
+        public Tvalue GetValueByKey(ulong key);
 
         /// <summary>
         /// Сериализует хеш-словарь класса в бинарный файл.

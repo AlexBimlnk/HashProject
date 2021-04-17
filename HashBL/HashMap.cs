@@ -29,16 +29,23 @@ namespace HashBL
 
         public void AddHash(ulong loginHash, TValue value)
         {
-            if (Search(loginHash) != null)
+            if (Contains(loginHash))
                 throw new ArgumentException("Такой логин уже есть");
 
-            else if(hashMap.Count < MaxItemCount)
+            else if(Count < MaxItemCount)
                 hashMap[loginHash] = value;
             else
                 throw new OverflowException("Достигнуто максимальное кол-во элементов");
         }
 
-        public TValue Search(ulong key)
+        public bool Contains(ulong key)
+        {
+            if (hashMap.ContainsKey(key))
+                return true;
+            return false;
+        }
+
+        public TValue GetValueByKey(ulong key)
         {
             if (hashMap.ContainsKey(key))
                 return hashMap[key];
@@ -50,7 +57,7 @@ namespace HashBL
         {
             using (FileStream file = new FileStream(path, FileMode.Create))
             {
-                format.Serialize(file, this.hashMap);
+                format.Serialize(file, hashMap);
                 hashMap = new Dictionary<ulong, TValue>(MaxItemCount);
             }
         }

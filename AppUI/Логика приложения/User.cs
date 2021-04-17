@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using HashBL;
 
 namespace AppUI
@@ -22,7 +22,7 @@ namespace AppUI
 
             hashMap.Serealize("HashData/file1.data");
 
-            Console.WriteLine("Hashing end");
+            Debug.WriteLine("Hashing end");
 
             return hashMap;
         }
