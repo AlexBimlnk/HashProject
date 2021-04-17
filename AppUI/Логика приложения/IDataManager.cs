@@ -26,7 +26,5 @@
         /// <param name="value"> Значение у ключа, если пользователь будет найден. </param>
         /// <returns> Возвращает TRUE, если пользователь найден, иначе возвращает FALSE. </returns>
         public bool SearchUser(ulong key, out Account value);
-
-        public void UpdateData(Account value);
     }
 }

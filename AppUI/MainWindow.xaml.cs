@@ -32,8 +32,7 @@ namespace AppUI
 
             dataManager = new LocalDataManager();
 
-
-            this.Closing += SaveData;
+            this.Closing += SaveData; 
         }
 
         private void SaveData(object sender, CancelEventArgs e)
@@ -75,8 +74,7 @@ namespace AppUI
                 if (check)
                 {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
-                    MainFrame.Content = new AccountPage(MainFrame, ref accountValue);
-                    dataManager.UpdateData(accountValue);
+                    MainFrame.Content = new AccountPage(MainFrame, accountValue);
                 }
                     
                 else

@@ -21,7 +21,7 @@ namespace AppUI
         Frame MainFrame;
         Account myAccount;
 
-        public AccountPage(Frame frame, ref Account account)
+        public AccountPage(Frame frame, Account account)
         {
             InitializeComponent();
             myAccount = account;

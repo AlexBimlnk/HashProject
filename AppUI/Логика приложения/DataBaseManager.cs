@@ -28,10 +28,5 @@ namespace AppUI
         {
             throw new NotImplementedException();
         }
-
-        public void UpdateData(Account value)
-        {
-
-        }
     }
 }
