@@ -74,6 +74,7 @@ namespace AppUI
                 if (check)
                 {
                     DisplayMessage("Доступ разрешен.", "", MessageBoxImage.Information);
+                    string s = accountValue.Status;
                     MainFrame.Content = new AccountPage(MainFrame, accountValue);
                 }
                     

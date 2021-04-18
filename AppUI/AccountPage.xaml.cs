@@ -43,7 +43,8 @@ namespace AppUI
                 for (int i = 0;i < money_s.Length;i++)
                     if (!('0' <= money_s[i] && money_s[i] <= '9'))
                     {
-                        
+                        moneyBox.Clear();
+                        return;
                     }
 
                 int money = int.Parse(money_s);
