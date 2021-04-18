@@ -40,9 +40,7 @@ namespace HashBL
 
         public bool Contains(ulong key)
         {
-            if (hashMap.ContainsKey(key))
-                return true;
-            return false;
+            return hashMap.ContainsKey(key);
         }
 
         public TValue GetValueByKey(ulong key)
