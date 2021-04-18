@@ -22,25 +22,30 @@ namespace AppUI
 
 
         public bool SearchUser(ulong key, out Account value)
-        {
-            value = hashMap.GetValueByKey(key);
-
-            //Если в ОЗУ нет хеша
-            if (value == null)
+        {             
+            if (!hashMap.Contains(key))
             {
+                //Если в ОЗУ нет хеша
                 HashMap<Account> tempHashMap = new HashMap<Account>();
                 foreach (var i in Directory.GetFiles(PathData, $"*.{fileDataType}"))
                 {
                     tempHashMap.Deserialize(i);
-                    value = tempHashMap.GetValueByKey(key);
-
-                    //Если нашли пользователя
-                    if (value != null)
+                    
+                    if(tempHashMap.Contains(key))
+                    {
+                        value = tempHashMap.GetValueByKey(key);
                         return true;
+                    }
                 }
-            }
 
-            return value == null ? false : true;
+                value = null;
+                return false;
+            }
+            else
+            {
+                value = hashMap.GetValueByKey(key);
+                return true;
+            }
         }
 
         /// <summary>
