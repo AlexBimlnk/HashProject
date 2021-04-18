@@ -52,7 +52,7 @@ namespace AppUI
         /// Загружает данные в ОЗУ.
         /// </summary>
         /// <param name="folderPath"> Папка с данными. </param>
-        /// <param name="fileDataType"> Расширение файлов с данными (например data). </param>
+        /// <param name="fileType"> Расширение файлов с данными (например data). </param>
         public void LoadData(string folderPath, string fileType = "data")
         {
             PathData = folderPath;

@@ -12,6 +12,13 @@
         public void AddHash(ulong key, Tvalue value);
 
         /// <summary>
+        /// Проверяет вхождение ключа в коллекцию.
+        /// </summary>
+        /// <param name="key"> Ключ. </param>
+        /// <returns></returns>
+        public bool Contains(ulong key);
+
+        /// <summary>
         /// Возвращает значение данного ключа.
         /// </summary>
         /// <param name="key"> Ключ искомого значения. </param>

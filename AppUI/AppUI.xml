@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AppUI</name>
+    </assembly>
+    <members>
+        <member name="T:AppUI.AccountPage">
+            <summary>
+            Логика взаимодействия для AccountPage.xaml
+            </summary>
+            <summary>
+            AccountPage
+            </summary>
+        </member>
+        <member name="M:AppUI.AccountPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:AppUI.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:AppUI.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:AppUI.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:AppUI.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:AppUI.MainWindow.btnSignInClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Обработка клика мыши по кнопке "Войти".
+            </summary>
+        </member>
+        <member name="M:AppUI.MainWindow.btnReistrationClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Обработка клика мыши по кнопке "Зарегистрироваться".
+            </summary>
+        </member>
+        <member name="M:AppUI.MainWindow.CheckData(System.String,System.String)">
+            <summary>
+            Проверка корректности ввода
+            </summary>
+            <returns> True, если данные корректны </returns>
+        </member>
+        <member name="M:AppUI.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:AppUI.DataBaseManager">
+            <summary>
+            Класс для сохранения данных в БД
+            </summary>
+        </member>
+        <member name="P:AppUI.IAccount.Status">
+            <summary>
+            Возвращает статус аккаунта.
+            </summary>
+        </member>
+        <member name="P:AppUI.IAccount.Balance">
+            <summary>
+            Возвращает баланс.
+            </summary>
+        </member>
+        <member name="M:AppUI.IAccount.AddMoney(System.Int32)">
+            <summary>
+            Зачисляет деньги на баланс.
+            </summary>
+            <param name="count"> Количество зачисляемых средств. </param>
+        </member>
+        <member name="M:AppUI.IAccount.Report">
+            <summary>
+            Отчет об аккаунте, это могут быть его какие то данные, или жалования пользователя
+            Или может какие нибудь логи
+            </summary>
+        </member>
+        <member name="P:AppUI.IDataManager.PathData">
+            <summary>
+            Путь расположения данных.
+            </summary>
+        </member>
+        <member name="M:AppUI.IDataManager.SaveData">
+            <summary>
+            Сохранить данные.
+            </summary>
+        </member>
+        <member name="M:AppUI.IDataManager.AddData(System.String,System.String)">
+            <summary>
+            Добавить данные.
+            </summary>
+            <param name="login"> Логин пользователя. </param>
+            <param name="password"> Пароль пользователя. </param>
+        </member>
+        <member name="M:AppUI.IDataManager.SearchUser(System.UInt64,AppUI.Account@)">
+            <summary>
+            Проверяет записан ли уже данный пользователь.
+            </summary>
+            <param name="key"> Хеш-ключ пользователя. </param>
+            <param name="value"> Значение у ключа, если пользователь будет найден. </param>
+            <returns> Возвращает TRUE, если пользователь найден, иначе возвращает FALSE. </returns>
+        </member>
+        <member name="T:AppUI.LocalDataManager">
+            <summary>
+            Класс для локального сохранения данных
+            </summary>
+        </member>
+        <member name="M:AppUI.LocalDataManager.LoadData(System.String,System.String)">
+            <summary>
+            Загружает данные в ОЗУ.
+            </summary>
+            <param name="folderPath"> Папка с данными. </param>
+            <param name="fileType"> Расширение файлов с данными (например data). </param>
+        </member>
+    </members>
+</doc>
